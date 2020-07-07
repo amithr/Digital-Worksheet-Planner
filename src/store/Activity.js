@@ -9,6 +9,7 @@ export default class Activity {
     answer = "";
     wordCount = 100;
     position = 0;
+    score = 0;
 
     constructor(activityType, position){
         this.activityType = activityType;
@@ -21,5 +22,6 @@ decorate(Activity, {
     question: observable,
     answer: observable,
     wordCount: observable,
-    position: observable
+    position: observable,
+    score: observable
 })

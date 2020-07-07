@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from "mobx-react";
 import { Form, Button } from 'react-bootstrap';
 
-const WorksheetActivityWritingTeacherView = class WorksheetActivityWritingTeacherView extends React.Component {
+class WorksheetActivityWritingTeacherView extends React.Component {
     constructor(props) {
         super(props);
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Button} from 'react-bootstrap';
-import StudentView from './WorksheetActivityWritingStudentView';
-import TeacherView from './WorksheetActivityWritingTeacherView';
+import StudentView from './WorksheetActivityGapfillStudentView';
+import TeacherView from './WorksheetActivityGapfillTeacherView';
 
 class WorksheetActivityGapfill extends React.Component {
     constructor(props) {
@@ -11,7 +11,7 @@ class WorksheetActivityGapfill extends React.Component {
         this.state = {
             display: 'student'
         };
-    
+        
     };
 
     changeDisplay = () => {

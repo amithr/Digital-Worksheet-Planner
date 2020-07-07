@@ -13,15 +13,15 @@ const Worksheet = observer(class Worksheet extends React.Component {
     }
     render() {
         return (
-            <div class="row">
-                <div class="column">
+            <div className="row">
+                <div className="column">
                     <WorksheetActivityPicker store={this.activityStore} />
                 </div>
-                <div class="column">
+                <div className="column">
                     <WorksheetActivityArea store={this.activityStore} />
                 </div>
                 {/*Student Column */}
-                <div class="column">
+                <div className="column">
 
                 </div>
             </div>

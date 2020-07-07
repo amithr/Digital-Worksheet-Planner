@@ -1,3 +1,5 @@
+This is the frontend of the Digital Worksheet Creator. It is written entirely in React.js with Mobx utilized for state management.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

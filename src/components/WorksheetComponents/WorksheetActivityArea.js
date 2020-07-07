@@ -1,6 +1,10 @@
 import React from 'react';
+import { Button} from 'react-bootstrap';
 import { observer } from "mobx-react";
 import WorksheetActivityWriting from './WorksheetActivities/WorksheetActivityWriting/WorksheetActivityWriting';
+import WorksheetActivityGapfill from './WorksheetActivities/WorksheetActivityGapfill/WorksheetActivityGapfill';
+
+/* This file includes the DeleteActivity component as well */
 
 const WorksheetActivityArea = observer(class WorksheetActivityArea extends React.Component {
     constructor(props) {
@@ -13,20 +17,35 @@ const WorksheetActivityArea = observer(class WorksheetActivityArea extends React
         this.store.loadActivities();
     }
 
+    
+
     renderActivities() {
         let activityArray = [];
 
         this.store.activities.map((activity, index) => {
             switch(activity.activityType) {
                 case 'writing':
-                    activityArray.push(<WorksheetActivityWriting 
-                        key={index}
+                    activityArray.push(
+                    <div key={index}>
+                    <DeleteActivity store={this.store} activity={activity} />
+                    <WorksheetActivityWriting 
                         store = {this.store}
                         position={activity.position}
                         activityid={activity.id} 
                         question={activity.question} 
                         answer={activity.answer} 
-                        wordcount={activity.wordCount} />)
+                        wordcount={activity.wordCount} /></div>)
+                case 'gapfill':
+                    activityArray.push(
+                        <div key={index}>
+                        <DeleteActivity store={this.store} activity={activity} />
+                        <WorksheetActivityGapfill 
+                            store = {this.store}
+                            position={activity.position}
+                            activityid={activity.id} 
+                            question={activity.question} 
+                            answer={activity.answer} 
+                            wordcount={activity.wordCount} /></div>)
             }
         });
         return activityArray;
@@ -40,6 +59,23 @@ const WorksheetActivityArea = observer(class WorksheetActivityArea extends React
         );
     }
 })
+
+class DeleteActivity extends React.Component {
+        constructor(props) {
+            super(props);
+
+            this.store = this.props.store;
+            this.removeActivity.bind(this);
+        }
+
+        removeActivity = () => {
+            this.store.removeActivity(this.props.activity);
+        }
+
+        render() {
+            return (<Button onClick={this.removeActivity}>x</Button>);
+        }
+};
 
 export default WorksheetActivityArea;
    
