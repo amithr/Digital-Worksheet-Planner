@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Button} from 'react-bootstrap';
 
-const WorksheetActivityWritingStudentView = class WorksheetActivityWritingStudentView extends React.Component {
+class WritingStudentView extends React.Component {
     constructor(props) {
         super(props);
 
@@ -37,4 +37,6 @@ const WorksheetActivityWritingStudentView = class WorksheetActivityWritingStuden
     }
 };
 
-export default WorksheetActivityWritingStudentView;
+
+
+export default WritingStudentView;

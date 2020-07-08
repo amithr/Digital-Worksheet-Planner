@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button} from 'react-bootstrap';
 import { observer } from "mobx-react";
-import WorksheetActivityWriting from './WorksheetActivities/WorksheetActivityWriting/WorksheetActivityWriting';
-import WorksheetActivityGapfill from './WorksheetActivities/WorksheetActivityGapfill/WorksheetActivityGapfill';
+import WorksheetActivityWriting from './WorksheetActivities/Writing/Writing';
+import WorksheetActivityGapfill from './WorksheetActivities/Gapfill/Gapfill';
 
 /* This file includes the DeleteActivity component as well */
 
@@ -35,6 +35,7 @@ const WorksheetActivityArea = observer(class WorksheetActivityArea extends React
                         question={activity.question} 
                         answer={activity.answer} 
                         wordcount={activity.wordCount} /></div>)
+                    break;
                 case 'gapfill':
                     activityArray.push(
                         <div key={index}>
@@ -46,6 +47,9 @@ const WorksheetActivityArea = observer(class WorksheetActivityArea extends React
                             question={activity.question} 
                             answer={activity.answer} 
                             wordcount={activity.wordCount} /></div>)
+                    break;
+                default:
+                    break;
             }
         });
         return activityArray;

@@ -1,9 +1,7 @@
 import React from 'react';
-import SelectionHighlighter from 'react-highlight-selection';
 import { Form, Button } from 'react-bootstrap';
-import './WorksheetActivityGapfill.css'
 
-class WorksheetActivityGapfillTeacherView extends React.Component {
+class GapfillTeacherView extends React.Component {
     constructor(props) {
         super(props);
 
@@ -40,4 +38,4 @@ class WorksheetActivityGapfillTeacherView extends React.Component {
     }
 };
 
-export default WorksheetActivityGapfillTeacherView;
+export default GapfillTeacherView;

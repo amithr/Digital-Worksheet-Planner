@@ -7,11 +7,13 @@ class WorksheetActivityPicker extends React.Component {
 
         this.store = this.props.store;
 
+        //To add an activity type, add it to the state object, activityArray, and in the handleSubmit function.        
         this.state = {
             'gapfill': false,
             'matching': false,
             'multiple_choice': false,
             'writing': false,
+            'sentence_builder':false
 
         }
 
@@ -19,7 +21,9 @@ class WorksheetActivityPicker extends React.Component {
             {id: 1, label:'Gapfill', keyword:'gapfill'}, 
             {id: 2, label:'Matching', keyword: 'matching'}, 
             {id: 3, label:'Multiple Choice', keyword: 'multiple_choice'}, 
-            {id: 4, label: 'Writing', keyword: 'writing'}];
+            {id: 4, label: 'Writing', keyword: 'writing'},
+            {id: 5, label: 'Sentence Builder', keyword: 'sentence_builder'}
+        ];
         
         
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,7 +43,6 @@ class WorksheetActivityPicker extends React.Component {
 
     handleSubmit = () => {
         if(this.state.writing) {
-            console.log('written');
             this.store.createActivity('writing');
         }
         if(this.state.matching) {
@@ -50,6 +53,9 @@ class WorksheetActivityPicker extends React.Component {
         }
         if(this.state.gapfill) {
             this.store.createActivity('gapfill');
+        }
+        if(this.state.sentence_builder) {
+            this.store.createActivity('sentence_builder');
         }
     }
 

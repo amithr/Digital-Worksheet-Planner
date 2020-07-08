@@ -1,15 +1,15 @@
 import React from 'react';
 import { Form, Button} from 'react-bootstrap';
-import StudentView from './WorksheetActivityGapfillStudentView';
-import TeacherView from './WorksheetActivityGapfillTeacherView';
+import StudentView from './GapfillStudentView';
+import TeacherView from './GapfillTeacherView';
 
-class WorksheetActivityGapfill extends React.Component {
+class Gapfill extends React.Component {
     constructor(props) {
         super(props);
 
-
+        // Default state should be teacher for dev purposes.
         this.state = {
-            display: 'student'
+            display: 'teacher'
         };
         
     };
@@ -40,4 +40,4 @@ class WorksheetActivityGapfill extends React.Component {
     }
 };
 
-export default WorksheetActivityGapfill;
+export default Gapfill;

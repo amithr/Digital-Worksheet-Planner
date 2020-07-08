@@ -1,8 +1,8 @@
 import React from 'react';
-import { observer } from "mobx-react";
+import PropTypes from 'prop-types';
 import { Form, Button } from 'react-bootstrap';
 
-class WorksheetActivityWritingTeacherView extends React.Component {
+class WritingTeacherView extends React.Component {
     constructor(props) {
         super(props);
 
@@ -38,4 +38,10 @@ class WorksheetActivityWritingTeacherView extends React.Component {
     }
 };
 
-export default WorksheetActivityWritingTeacherView;
+WritingTeacherView.propTypes = {
+    wordcount: PropTypes.number
+}
+
+
+
+export default WritingTeacherView;

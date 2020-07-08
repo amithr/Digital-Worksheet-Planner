@@ -1,15 +1,15 @@
 import React from 'react';
 import { Form, Button} from 'react-bootstrap';
-import StudentView from './WorksheetActivityWritingStudentView';
-import TeacherView from './WorksheetActivityWritingTeacherView';
+import StudentView from './WritingStudentView';
+import TeacherView from './WritingTeacherView';
 
-class WorksheetActivityWriting extends React.Component {
+class Writing extends React.Component {
     constructor(props) {
         super(props);
 
-
+        // Default state should be teacher for dev purposes
         this.state = {
-            display: 'student'
+            display: 'teacher'
         };
     
     };
@@ -40,4 +40,4 @@ class WorksheetActivityWriting extends React.Component {
     }
 };
 
-export default WorksheetActivityWriting;
+export default Writing;
