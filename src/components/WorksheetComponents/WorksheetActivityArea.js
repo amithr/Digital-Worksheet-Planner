@@ -3,6 +3,7 @@ import { Button} from 'react-bootstrap';
 import { observer } from "mobx-react";
 import WorksheetActivityWriting from './WorksheetActivities/Writing/Writing';
 import WorksheetActivityGapfill from './WorksheetActivities/Gapfill/Gapfill';
+import WorksheetActivityMatching from './WorksheetActivities/Matching/Matching';
 
 /* This file includes the DeleteActivity component as well */
 
@@ -11,6 +12,12 @@ const WorksheetActivityArea = observer(class WorksheetActivityArea extends React
         super(props);
 
         this.store = this.props.store;
+
+        this.components = {
+            writing: WorksheetActivityWriting,
+            gapfill: WorksheetActivityGapfill,
+            matching: WorksheetActivityMatching
+        }
     };
 
     componentDidMount() {
@@ -23,35 +30,37 @@ const WorksheetActivityArea = observer(class WorksheetActivityArea extends React
         let activityArray = [];
 
         this.store.activities.map((activity, index) => {
-            switch(activity.activityType) {
-                case 'writing':
-                    activityArray.push(
-                    <div key={index}>
-                    <DeleteActivity store={this.store} activity={activity} />
-                    <WorksheetActivityWriting 
+            const ActivityComponent = this.components[activity.activityType];
+            activityArray.push(
+                <div key={index}>
+                    <DeleteActivity store={this.store} activity={activity} />    
+                    <ActivityComponent
                         store = {this.store}
                         position={activity.position}
                         activityid={activity.id} 
                         question={activity.question} 
                         answer={activity.answer} 
-                        wordcount={activity.wordCount} /></div>)
-                    break;
-                case 'gapfill':
-                    activityArray.push(
-                        <div key={index}>
-                        <DeleteActivity store={this.store} activity={activity} />
-                        <WorksheetActivityGapfill 
-                            store = {this.store}
-                            position={activity.position}
-                            activityid={activity.id} 
-                            question={activity.question} 
-                            answer={activity.answer} 
-                            wordcount={activity.wordCount} /></div>)
-                    break;
-                default:
-                    break;
-            }
+                        wordcount={activity.wordCount} />
+                </div>
+            );
+
+            // This is legacy code - it was the long way of doing things, but it might come in handy.
+            // switch(activity.activityType) {
+            //     case 'writing':
+            //         activityArray.push(
+            //         <div key={index}>
+            //         <DeleteActivity store={this.store} activity={activity} />
+            //         <WorksheetActivityWriting 
+            //             store = {this.store}
+            //             position={activity.position}
+            //             activityid={activity.id} 
+            //             question={activity.question} 
+            //             answer={activity.answer} 
+            //             wordcount={activity.wordCount} /></div>)
+            //         break;
+            //     case 'gapfill':
         });
+        
         return activityArray;
     }
 

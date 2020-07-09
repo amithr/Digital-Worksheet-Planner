@@ -7,7 +7,7 @@ class WorksheetActivityPicker extends React.Component {
 
         this.store = this.props.store;
 
-        //To add an activity type, add it to the state object, activityArray, and in the handleSubmit function.        
+        //To add an activity type, add it to the state object and activityArray       
         this.state = {
             'gapfill': false,
             'matching': false,
@@ -42,20 +42,13 @@ class WorksheetActivityPicker extends React.Component {
     }
 
     handleSubmit = () => {
-        if(this.state.writing) {
-            this.store.createActivity('writing');
-        }
-        if(this.state.matching) {
-            this.store.createActivity('matching');
-        }
-        if(this.state.multiple_choice) {
-            this.store.createActivity('multiple_choice');
-        }
-        if(this.state.gapfill) {
-            this.store.createActivity('gapfill');
-        }
-        if(this.state.sentence_builder) {
-            this.store.createActivity('sentence_builder');
+        //Check which activities in this.state are marked true and create those activities
+        //Set state to false to indicate that they no longer need to be added
+        for (const [activity, isActivitySelected] of Object.entries(this.state)) {
+            if(isActivitySelected) {
+                this.store.createActivity(activity.toString());
+                this.setState({activity : false});
+            }
         }
     }
 
@@ -63,22 +56,8 @@ class WorksheetActivityPicker extends React.Component {
     selectActivity = (event) => {
         let isSelected = event.target.checked;
         let isSelectedSectionType = event.target.value;
-        if(isSelected) {
-            switch(isSelectedSectionType) {
-                case 'gapfill':
-                    this.setState({'gapfill': true});
-                    break;
-                case 'matching':
-                    this.setState({'matching': true});
-                    break;
-                case 'multiple_choice':
-                    this.setState({'multiple_choice': true});
-                    break;
-                case 'writing':
-                    this.setState({'writing': true});
-                    break;
-            }
-        }
+        //Change state based on checkbox check/uncheck action
+        this.setState({[isSelectedSectionType]: isSelected});
     }
     
     render() {
