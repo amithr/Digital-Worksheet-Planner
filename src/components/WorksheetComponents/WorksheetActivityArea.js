@@ -44,7 +44,7 @@ const WorksheetActivityArea = observer(class WorksheetActivityArea extends React
                 </div>
             );
 
-            // This is legacy code - it was the long way of doing things, but it might come in handy.
+            // This is legacy code - it was the long way of doing things, but it might come in handy later.
             // switch(activity.activityType) {
             //     case 'writing':
             //         activityArray.push(
