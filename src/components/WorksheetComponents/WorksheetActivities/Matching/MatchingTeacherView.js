@@ -8,6 +8,7 @@ class MatchingTeacherView extends React.Component {
         super(props);
 
         this.store = this.props.store;
+        this.activity = this.store.findActivity(this.props.activityid);
 
         this.state = {
             questionAnswerPairFormArray:[],
@@ -37,14 +38,16 @@ class MatchingTeacherView extends React.Component {
             intermediateArray = [...this.state.answers];
             intermediateArray[questionAnswerPairNumber] = fieldValue;
             this.setState({answers: intermediateArray });
+            console.log("correctAnswersEvent" + intermediateArray);
         }
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        let activity = this.store.findActivity(this.props.activityid);
-        activity.questions = this.state.questions;
-        activity.correctAnswers = this.state.answers;
+        console.log("Submit state " + this.state.questions);
+        console.log("Submit answers " + this.state.answers);
+        this.activity.questions = this.state.questions;
+        this.activity.correctAnswers = this.state.answers;
     }
 
     addNewQuestionAnswerPair(event) {
@@ -56,11 +59,14 @@ class MatchingTeacherView extends React.Component {
         // Increment Question Answer Pair number
         questionAnswerPairNumber++;
         this.setState({questionAnswerPairNumber: questionAnswerPairNumber});
+        console.log('addNewQuestionAnswerPairNumber' + questionAnswerPairNumber);
     }
 
     populateComponent(activityQuestions, activityCorrectAnswers) {
         let questionAnswerPairNumber = 0;
         let questionAnswerPairFormArray = [];
+        let intermediateQuestionsArray = []
+        let intermediateCorrectAnswersArray = [];
         for(let index = 0; index < activityQuestions.length; index++) {
                 questionAnswerPairNumber = index;
                 let questionAnswerPairFormObject = <QuestionAnswerPairForm 
@@ -71,19 +77,27 @@ class MatchingTeacherView extends React.Component {
                 handleChange={this.handleChange} />;
 
                 questionAnswerPairFormArray.push(questionAnswerPairFormObject)
-        }
+                //Make sure that questions and correctAnswers state arrays reflect activity object 
+                // questions and correctAnswers arrays
+                intermediateQuestionsArray[index] = activityQuestions[index];
+                intermediateCorrectAnswersArray[index] = activityCorrectAnswers[index];
 
-        questionAnswerPairNumber++;
-        this.setState({questionAnswerPairFormArray: questionAnswerPairFormArray});
-        this.setState({questionAnswerPairNumber: questionAnswerPairNumber});
+                console.log('populate Correct Answers ' + intermediateCorrectAnswersArray);
+
+            // Increment so the user can add the next component
+            questionAnswerPairNumber++;
+            this.setState({questions: intermediateQuestionsArray });
+            this.setState({answers: intermediateCorrectAnswersArray });
+            this.setState({questionAnswerPairFormArray: questionAnswerPairFormArray});
+            this.setState({questionAnswerPairNumber: questionAnswerPairNumber});
+        }
     }
  
     componentDidMount() {
-        let activity = this.store.findActivity(this.props.activityid);
-        let activityQuestions = activity.questions;
-        let activityCorrectAnswers = activity.correctAnswers;
+        let activityQuestions = this.activity.questions;
+        let activityCorrectAnswers = this.activity.correctAnswers;
         if(activityQuestions && activityCorrectAnswers) {
-            this.populateComponent(activityQuestions, activityCorrectAnswers)
+            this.populateComponent(activityQuestions, activityCorrectAnswers);
         }
     }
 

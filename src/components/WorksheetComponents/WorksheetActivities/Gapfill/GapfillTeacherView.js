@@ -25,6 +25,14 @@ class GapfillTeacherView extends React.Component {
         activity.questions = this.state.question;
     }
 
+    populateComponent() {
+        
+    }
+
+    componentDidMount() {
+        
+    }
+
     render() {
         return(
         <Form.Group>
