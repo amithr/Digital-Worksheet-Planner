@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Button} from 'react-bootstrap';
+import { getRandomizedCorrectAnswerArray } from './MatchingHelpers';
 
 class MatchingStudentView extends React.Component {
     constructor(props) {
@@ -8,7 +9,9 @@ class MatchingStudentView extends React.Component {
         this.store = this.props.store;
 
         this.state = {
-            answer:''
+            questions: [],
+            answers: [],
+            studentAnswers: [],
         };
         
         this.handleChange = this.handleChange.bind(this);
@@ -22,14 +25,21 @@ class MatchingStudentView extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         let activity = this.store.findActivity(this.props.activityid);
-        activity.answer = this.state.answer;
+        activity.studentAnswers = this.state.answer;
+    }
+
+    componentDidMount() {
+        let activity = this.store.findActivity(this.props.activityid);
+        this.setState({answers: getRandomizedCorrectAnswerArray(activity.correctAnswers)});
+        this.setState({questions: activity.questions});
     }
 
     render() {
         return(
             <Form.Group >
                 <p>This is the student view!</p>
-                <p>Questions: {this.props.question}</p>
+                <p>Questions: {this.state.questions}</p>
+                <p>Answers: {this.state.answers}</p>
                 <Button variant="primary" onClick = {this.handleSubmit}>Submit</Button>
             </Form.Group>
         );

@@ -5,8 +5,10 @@ export default class Activity {
     id = null;
     author = null;
     activityType = null;
-    question = "";
-    answer = "";
+    //There could be one answer or many answers
+    questions = null;
+    studentAnswers = null;
+    correctAnswers = null;
     wordCount = 100;
     position = 0;
     score = 0;
@@ -19,8 +21,9 @@ export default class Activity {
 }
 
 decorate(Activity, {
-    question: observable,
-    answer: observable,
+    questions: observable,
+    studentAnswers: observable,
+    correctAnswers: observable,
     wordCount: observable,
     position: observable,
     score: observable

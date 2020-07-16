@@ -22,7 +22,7 @@ class WritingStudentView extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         let activity = this.store.findActivity(this.props.activityid);
-        activity.answer = this.state.answer;
+        activity.studentAnswers = this.state.answer;
     }
 
     render() {

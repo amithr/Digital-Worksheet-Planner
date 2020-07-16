@@ -9,6 +9,9 @@ class GapfillStudentView extends React.Component {
         super(props);
 
         this.store = this.props.store;
+        //I don't normally initialize an activity object, but this was used in more than one place
+        //in this component.
+        this.activity = this.store.findActivity(this.props.activityid);
 
         this.state = {
             questionGapfillText:"",
@@ -34,9 +37,8 @@ class GapfillStudentView extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        let activity = this.store.findActivity(this.props.activityid);
-        activity.answer = this.state.studentAnswers;
-        console.log(activity);
+        this.activity.studentAnswers = this.state.studentAnswers;
+        console.log(this.activity);
     }
 
     //Run this onComponentMount to convert text from teacher view to gapfill in student view.
@@ -73,7 +75,7 @@ class GapfillStudentView extends React.Component {
                 );
             }
         }
-        //Change text array back to a strink that can be displayed
+        //Change text array back to a string that can be displayed
         let questionTextWithGapfills = transformArrayToString(questionTextArray);
         this.setState({questionGapfillText: questionTextWithGapfills});
         this.setState({correctAnswers: correctAnswers});
@@ -84,6 +86,8 @@ class GapfillStudentView extends React.Component {
     // for the student to view.
     componentDidMount() {
         this.convertQuestionTexttoGapfill();
+        //This is here because the questions and answers were submitted as a string from the teacher view.
+        this.activity.correctAnswers = this.state.correctAnswers;
     }
 
     render() {

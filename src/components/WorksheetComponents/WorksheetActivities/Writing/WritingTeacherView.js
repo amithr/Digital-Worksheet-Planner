@@ -17,13 +17,13 @@ class WritingTeacherView extends React.Component {
     };
 
     handleChange(event) {
-        this.setState({question: event.target.value});
+        this.setState({questions: event.target.value});
     }
 
     handleSubmit(event) {
         event.preventDefault();
         let activity = this.store.findActivity(this.props.activityid);
-        activity.question = this.state.question;
+        activity.questions = this.state.question;
     }
 
     render() {

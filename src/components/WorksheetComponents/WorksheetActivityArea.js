@@ -38,8 +38,9 @@ const WorksheetActivityArea = observer(class WorksheetActivityArea extends React
                         store = {this.store}
                         position={activity.position}
                         activityid={activity.id} 
-                        question={activity.question} 
-                        answer={activity.answer} 
+                        questions={activity.questions}
+                        studentAnswers ={activity.studentAnswers} 
+                        correctAnswers={activity.correctAnswers} 
                         wordcount={activity.wordCount} />
                 </div>
             );
