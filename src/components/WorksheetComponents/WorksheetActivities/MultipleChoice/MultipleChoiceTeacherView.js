@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button } from 'react-bootstrap';
 
-class WritingTeacherView extends React.Component {
+class MultipleChoiceTeacherView extends React.Component {
     constructor(props) {
         super(props);
 
@@ -48,10 +48,5 @@ class WritingTeacherView extends React.Component {
     }
 };
 
-WritingTeacherView.propTypes = {
-    wordcount: PropTypes.number
-}
 
-
-
-export default WritingTeacherView;
+export default MultipleChoiceTeacherView;

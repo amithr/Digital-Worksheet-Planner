@@ -1,17 +1,17 @@
 import React from 'react';
 import { Form, Button} from 'react-bootstrap';
-import StudentView from './GapfillStudentView';
-import TeacherView from './GapfillTeacherView';
+import StudentView from './SentenceBuilderStudentView';
+import TeacherView from './SentenceBuilderTeacherView';
 
-class Gapfill extends React.Component {
+class SemtenceBuilder extends React.Component {
     constructor(props) {
         super(props);
 
-        // Default state should be teacher for dev purposes.
+        // Default state should be teacher for dev purposes
         this.state = {
             display: 'teacher'
         };
-        
+    
     };
 
     changeDisplay = () => {
@@ -23,7 +23,7 @@ class Gapfill extends React.Component {
         let { display } = this.state;
         
         if (display === 'student') {
-          return <StudentView store={this.props.store} answers={this.props.correctAnswers} question={this.props.questions} activityid={this.props.activityid} />
+          return <StudentView store={this.props.store} answer={this.props.studentAnswers} question={this.props.questions} activityid={this.props.activityid} />
         } else if (display === 'teacher') {
           return <TeacherView store={this.props.store} question={this.props.questions} wordcount={this.props.wordcount} activityid={this.props.activityid} />
         }
@@ -32,7 +32,7 @@ class Gapfill extends React.Component {
     render() {
         return(
             <Form onSubmit = {this.handleSubmit} position={this.props.position}>
-                <p>Hello! This is the gapfill!</p>
+                <p>Hello! This is the sentence builder activity!</p>
                 <Button onClick={this.changeDisplay}>Change Display</Button>
                 {this.renderInner()}
             </Form>
@@ -40,4 +40,4 @@ class Gapfill extends React.Component {
     }
 };
 
-export default Gapfill;
+export default SentenceBuilder;

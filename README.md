@@ -1,5 +1,34 @@
 This is the frontend of the Digital Worksheet Creator. It is written entirely in React.js with Mobx utilized for state management.
 
+- Notes
+
+- Teacher creates a worksheet which has it's own id.
+- Student is sent an email with link to a worksheet (with it's own id and the teacher worksheet's id)
+- Student can only see the student views of these worksheets. Questions
+are loaded into the worksheet from the server based on the teacher worksheet
+- When the student logs in, based on the student and teacher's id, the teacher can see
+the student's worksheet, progress, and eventual mark (available in the dashboard)
+    - In the future, there will be communicate options between the teacher and the student, but
+    for now, this is meant to be used in conjunction with Zoom.
+- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

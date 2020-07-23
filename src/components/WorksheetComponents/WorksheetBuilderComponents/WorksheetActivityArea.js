@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button} from 'react-bootstrap';
 import { observer } from "mobx-react";
-import WorksheetActivityWriting from './WorksheetActivities/Writing/Writing';
-import WorksheetActivityGapfill from './WorksheetActivities/Gapfill/Gapfill';
-import WorksheetActivityMatching from './WorksheetActivities/Matching/Matching';
+import WorksheetActivityWriting from '../WorksheetActivities/Writing/Writing';
+import WorksheetActivityGapfill from '../WorksheetActivities/Gapfill/Gapfill';
+import WorksheetActivityMatching from '../WorksheetActivities/Matching/Matching';
+import WorksheetActivityMultipleChoice from '../WorksheetActivities/MultipleChoice/MultipleChoice';
 
 /* This file includes the DeleteActivity component as well */
 
@@ -16,7 +17,8 @@ const WorksheetActivityArea = observer(class WorksheetActivityArea extends React
         this.components = {
             writing: WorksheetActivityWriting,
             gapfill: WorksheetActivityGapfill,
-            matching: WorksheetActivityMatching
+            matching: WorksheetActivityMatching,
+            multiple_choice: WorksheetActivityMultipleChoice
         }
     };
 

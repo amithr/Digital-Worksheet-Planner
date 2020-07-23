@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Form, Button } from 'react-bootstrap';
 
-class WritingTeacherView extends React.Component {
+class SentenceBuilderTeacherView extends React.Component {
     constructor(props) {
         super(props);
 
@@ -27,7 +26,7 @@ class WritingTeacherView extends React.Component {
     }
 
     populateComponent() {
-        this.setState({question: this.activity.questions});
+        this.state.question({question: this.activity.questions});
     }
 
     componentDidMount() {
@@ -40,18 +39,13 @@ class WritingTeacherView extends React.Component {
         return(
         <Form.Group>
             <p>This is the teacher view!</p>
-            <Form.Control as="input" size="lg" type="number" placeholder="# of words required" value={this.props.wordcount} onChange={this.handleChange} />
-            <Form.Control as="textarea" rows="3" value={this.state.question} onChange={this.handleChange} />
+            <p>Type your text in the box below. Wherever you would like a gapfill, type a '$' directly followed by the answer.
+            </p>
+            <Form.Control as="textarea" rows="3" value={this.state.text} onChange={this.handleChange} />
             <Button variant="primary" onClick={this.handleSubmit}>Submit</Button>
         </Form.Group>
         );
     }
 };
 
-WritingTeacherView.propTypes = {
-    wordcount: PropTypes.number
-}
-
-
-
-export default WritingTeacherView;
+export default SentenceBuilderTeacherView;

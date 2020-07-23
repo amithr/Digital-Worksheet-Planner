@@ -9,6 +9,7 @@ export default class ActivityStore {
     index = 0;
 
     constructor() {
+        //Eventually, loadActivities with the aid of the worksheet ID.
         this.loadActivities();
         this.index = 0;
     };

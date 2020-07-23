@@ -1,9 +1,9 @@
 import React from 'react';
 import { Form, Button} from 'react-bootstrap';
-import StudentView from './WritingStudentView';
-import TeacherView from './WritingTeacherView';
+import StudentView from './MultipleChoiceStudentView';
+import TeacherView from './MultipleChoiceTeacherView';
 
-class Writing extends React.Component {
+class IndividualMultipleChoiceQuestion extends React.Component {
     constructor(props) {
         super(props);
 
@@ -23,16 +23,25 @@ class Writing extends React.Component {
         let { display } = this.state;
         
         if (display === 'student') {
-          return <StudentView store={this.props.store} answer={this.props.studentAnswers} question={this.props.questions} activityid={this.props.activityid} />
+          return <StudentView store={this.props.store} 
+          question={this.props.question} 
+          correctAnswer={this.props.correctAnswer} 
+          studentAnswer={this.props.studentAnswer} 
+          answerOptions={this.props.answerOptions} 
+          activityid={this.props.activityid} />
         } else if (display === 'teacher') {
-          return <TeacherView store={this.props.store} question={this.props.questions} wordcount={this.props.wordcount} activityid={this.props.activityid} />
+          return <TeacherView store={this.props.store} 
+          correctAnswer={this.props.correctAnswer}
+          question={this.props.question} 
+          answerOptions={this.props.answerOptions} 
+          activityid={this.props.activityid} />
         }
     };
 
     render() {
         return(
             <Form onSubmit = {this.handleSubmit} position={this.props.position}>
-                <p>Hello! This is the writing activity!</p>
+                <p>Hello! This is the multiple choice activity!</p>
                 <Button onClick={this.changeDisplay}>Change Display</Button>
                 {this.renderInner()}
             </Form>
@@ -40,4 +49,4 @@ class Writing extends React.Component {
     }
 };
 
-export default Writing;
+export default IndividualMultipleChoiceQuestion;

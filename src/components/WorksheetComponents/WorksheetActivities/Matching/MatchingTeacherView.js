@@ -11,10 +11,10 @@ class MatchingTeacherView extends React.Component {
         this.activity = this.store.findActivity(this.props.activityid);
 
         this.state = {
-            questionAnswerPairFormArray:[],
-            questionAnswerPairNumber: 0,
             questions: [],
-            answers: []
+            answers: [],
+            questionAnswerPairFormArray:[],
+            questionAnswerPairNumber: 0
         };
 
         this.timer = [];
@@ -53,7 +53,8 @@ class MatchingTeacherView extends React.Component {
     addNewQuestionAnswerPair(event) {
         let questionAnswerPairNumber = this.state.questionAnswerPairNumber;
         //Create new question/answer object
-        let questionAnswerPairFormObject = <QuestionAnswerPairForm key={questionAnswerPairNumber} questionAnswerPairNumber={questionAnswerPairNumber} handleChange={this.handleChange} />;
+        let questionAnswerPairFormObject = <QuestionAnswerPairForm key={questionAnswerPairNumber} questionAnswerPairNumber={questionAnswerPairNumber} 
+        handleChange={this.handleChange} deleteQuestionAnswerPair={this.deleteQuestionAnswerPair} />;
         //Add new question/answer object to array
         this.setState({questionAnswerPairFormArray: [...this.state.questionAnswerPairFormArray, questionAnswerPairFormObject]});
         // Increment Question Answer Pair number
@@ -62,12 +63,18 @@ class MatchingTeacherView extends React.Component {
         console.log('addNewQuestionAnswerPairNumber' + questionAnswerPairNumber);
     }
 
+    deleteQuestionAnswerPair(event) {
+
+    }
+
     populateComponent(activityQuestions, activityCorrectAnswers) {
         let questionAnswerPairNumber = 0;
         let questionAnswerPairFormArray = [];
         let intermediateQuestionsArray = []
         let intermediateCorrectAnswersArray = [];
         for(let index = 0; index < activityQuestions.length; index++) {
+                /*Update variable (questionAnswerPairNumber) so that it can be used
+                to update the state after all QuestionAnswerPairForm components have been created*/
                 questionAnswerPairNumber = index;
                 let questionAnswerPairFormObject = <QuestionAnswerPairForm 
                 question={activityQuestions[index]}
@@ -77,20 +84,23 @@ class MatchingTeacherView extends React.Component {
                 handleChange={this.handleChange} />;
 
                 questionAnswerPairFormArray.push(questionAnswerPairFormObject)
-                //Make sure that questions and correctAnswers state arrays reflect activity object 
-                // questions and correctAnswers arrays
+                /*Make sure that questions and correctAnswers state arrays reflect activity object 
+                questions and correctAnswers arrays - these intermediate arrays will later 
+                be stored in the state object as 'questions' and 'answers arrays*/
                 intermediateQuestionsArray[index] = activityQuestions[index];
                 intermediateCorrectAnswersArray[index] = activityCorrectAnswers[index];
 
                 console.log('populate Correct Answers ' + intermediateCorrectAnswersArray);
-
+        }
             // Increment so the user can add the next component
             questionAnswerPairNumber++;
+            //Populate state
             this.setState({questions: intermediateQuestionsArray });
             this.setState({answers: intermediateCorrectAnswersArray });
+            //Populate DOM
             this.setState({questionAnswerPairFormArray: questionAnswerPairFormArray});
             this.setState({questionAnswerPairNumber: questionAnswerPairNumber});
-        }
+        
     }
  
     componentDidMount() {
@@ -131,6 +141,7 @@ const QuestionAnswerPairForm = (props) => {
                     onMouseOut={props.handleChange}
                     placeholder={'Answer ' + (props.questionAnswerPairNumber+1)}
                     size="10"/>
+                <Button onClick={props.deleteQuestionAnswerPair}>x</Button>
             </div>
      );
 }

@@ -2,7 +2,17 @@ import React from 'react';
 import GoogleLogin from 'react-google-login';
 import logo from './logo.svg';
 import './App.css';
-import Worksheet from './components/WorksheetComponents/Worksheet';
+import Worksheets from './components/WorksheetComponents/Worksheets';
+
+/**
+ * User logs in, gives google id to client app
+ * The google id is sent to the backend (controller?) and either a new userId is generated (for new users)
+ or the userId is retrieved
+ * The user is redirected to the dashboard, with the userId as a url arguments
+ * The user's worksheets (and accompanying data) and known users (if a teacher) are loaded into the client app via a 
+ call to the backend (controller?) with the userId
+ * This information is continually updated based on the received data via Phoenix channels
+ */
 
 const App = () => {
 
@@ -19,7 +29,7 @@ const App = () => {
         onFailure={responseGoogle}
         cookiePolicy={'single_host_origin'}
     /> */}
-      <Worksheet></Worksheet>
+      <Worksheets></Worksheets>
     </div>
   );
 }

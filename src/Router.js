@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Dashboard from './components/DashboardComponents/Dashboard.js';
-import Worksheet from './components/WorksheetComponents/Worksheet.js';
+import Worksheet from './components/WorksheetComponents/Worksheets.js';
 import NotFound from './components/NotFound.js';
 import App from './App.js';
 

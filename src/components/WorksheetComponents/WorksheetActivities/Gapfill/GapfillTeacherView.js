@@ -6,6 +6,7 @@ class GapfillTeacherView extends React.Component {
         super(props);
 
         this.store = this.props.store;
+        this.activity = this.store.findActivity(this.props.activityid);
 
         this.state = {
             question:''
@@ -21,16 +22,17 @@ class GapfillTeacherView extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        let activity = this.store.findActivity(this.props.activityid);
-        activity.questions = this.state.question;
+        this.activity.questions = this.state.question;
     }
 
     populateComponent() {
-        
+        this.state.question({question: this.activity.questions});
     }
 
     componentDidMount() {
-        
+        if(this.activity.questions) {
+            this.populateComponent();
+        }
     }
 
     render() {

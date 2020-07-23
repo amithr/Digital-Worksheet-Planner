@@ -8,10 +8,38 @@
   width: 100%;
 }
 
+
+
 .column {
   display: flex;
   flex-direction: column;
   flex-basis: 100%;
   flex: 1;
 }
+
+.worksheet-builder-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  flex: 70%
+}
+
+.worksheet-activity-picker-column {
+  display: flex;
+  flex-direction: column;
+  flex: 30%;
+}
+
+.worksheet-activity-area-column {
+  display: flex;
+  flex-direction: column;
+  flex: 70%;
+
+}
+
+.sidebar-column {
+  flex: 30%;
+}
+
 

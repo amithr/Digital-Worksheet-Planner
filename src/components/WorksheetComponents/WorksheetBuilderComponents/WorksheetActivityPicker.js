@@ -7,7 +7,7 @@ class WorksheetActivityPicker extends React.Component {
 
         this.store = this.props.store;
 
-        //To add an activity type, add it to the state object and activityArray       
+        //To add an activity type, add it to the state object and activityArray 
         this.state = {
             'gapfill': false,
             'matching': false,

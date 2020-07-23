@@ -85,9 +85,11 @@ class GapfillStudentView extends React.Component {
     // When component mounts, immediately change teacher defined text into a gapfill
     // for the student to view.
     componentDidMount() {
-        this.convertQuestionTexttoGapfill();
-        //This is here because the questions and answers were submitted as a string from the teacher view.
-        this.activity.correctAnswers = this.state.correctAnswers;
+        if(this.props.question) {
+            this.convertQuestionTexttoGapfill();
+            //This is here because the questions and answers were submitted as a string from the teacher view.
+            this.activity.correctAnswers = this.state.correctAnswers;
+        }
     }
 
     render() {
