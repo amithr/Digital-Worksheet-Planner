@@ -37,31 +37,10 @@ const WorksheetActivityArea = observer(class WorksheetActivityArea extends React
                 <div key={index}>
                     <DeleteActivity store={this.store} activity={activity} />    
                     <ActivityComponent
-                        store = {this.store}
-                        position={activity.position}
-                        activityid={activity.id} 
-                        questions={activity.questions}
-                        studentAnswers ={activity.studentAnswers} 
-                        correctAnswers={activity.correctAnswers} 
-                        wordcount={activity.wordCount} />
+                        activity = {activity}
+                         />
                 </div>
             );
-
-            // This is legacy code - it was the long way of doing things, but it might come in handy later.
-            // switch(activity.activityType) {
-            //     case 'writing':
-            //         activityArray.push(
-            //         <div key={index}>
-            //         <DeleteActivity store={this.store} activity={activity} />
-            //         <WorksheetActivityWriting 
-            //             store = {this.store}
-            //             position={activity.position}
-            //             activityid={activity.id} 
-            //             question={activity.question} 
-            //             answer={activity.answer} 
-            //             wordcount={activity.wordCount} /></div>)
-            //         break;
-            //     case 'gapfill':
         });
         
         return activityArray;

@@ -1,12 +1,12 @@
 import React from 'react';
+import { observer } from "mobx-react";
 import { Form, Button } from 'react-bootstrap';
 
-class GapfillTeacherView extends React.Component {
+const GapfillTeacherView = observer(class GapfillTeacherView extends React.Component {
     constructor(props) {
         super(props);
 
-        this.store = this.props.store;
-        this.activity = this.store.findActivity(this.props.activityid);
+        this.activity = this.props.activity;
 
         this.state = {
             question:''
@@ -22,16 +22,17 @@ class GapfillTeacherView extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.activity.questions = this.state.question;
+        this.activity.questionData = this.state.question;
     }
 
-    populateComponent() {
-        this.state.question({question: this.activity.questions});
+    populateComponent(questionText) {
+        this.state.setState({question: questionText});
     }
 
     componentDidMount() {
-        if(this.activity.questions) {
-            this.populateComponent();
+        let questionText = this.activity.questionData;
+        if(questionText) {
+            this.populateComponent(questionText);
         }
     }
 
@@ -41,11 +42,11 @@ class GapfillTeacherView extends React.Component {
             <p>This is the teacher view!</p>
             <p>Type your text in the box below. Wherever you would like a gapfill, type a '$' directly followed by the answer.
             </p>
-            <Form.Control as="textarea" rows="3" value={this.state.text} onChange={this.handleChange} />
+            <Form.Control as="textarea" rows="3" value={this.state.question} onChange={this.handleChange} />
             <Button variant="primary" onClick={this.handleSubmit}>Submit</Button>
         </Form.Group>
         );
     }
-};
+});
 
 export default GapfillTeacherView;

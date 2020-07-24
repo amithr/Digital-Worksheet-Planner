@@ -1,12 +1,14 @@
 import React from 'react';
+import { observer } from "mobx-react";
 import { Form, Button} from 'react-bootstrap';
 import StudentView from './WritingStudentView';
 import TeacherView from './WritingTeacherView';
 
-class Writing extends React.Component {
+const Writing = observer(class Writing extends React.Component {
     constructor(props) {
         super(props);
 
+        this.activity = this.props.activity;
         // Default state should be teacher for dev purposes
         this.state = {
             display: 'teacher'
@@ -23,9 +25,9 @@ class Writing extends React.Component {
         let { display } = this.state;
         
         if (display === 'student') {
-          return <StudentView store={this.props.store} answer={this.props.studentAnswers} question={this.props.questions} activityid={this.props.activityid} />
+          return <StudentView activity={this.activity} />
         } else if (display === 'teacher') {
-          return <TeacherView store={this.props.store} question={this.props.questions} wordcount={this.props.wordcount} activityid={this.props.activityid} />
+          return <TeacherView activity={this.activity} />
         }
     };
 
@@ -38,6 +40,6 @@ class Writing extends React.Component {
             </Form>
         );
     }
-};
+});
 
 export default Writing;

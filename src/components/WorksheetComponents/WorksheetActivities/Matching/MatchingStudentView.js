@@ -1,13 +1,14 @@
 import React from 'react';
+import { observer } from "mobx-react";
 import { Form, Button} from 'react-bootstrap';
 import { getRandomizedCorrectAnswerArray } from './MatchingHelpers';
 import './Matching.css';
 
-class MatchingStudentView extends React.Component {
+const MatchingStudentView = observer(class MatchingStudentView extends React.Component {
     constructor(props) {
         super(props);
 
-        this.store = this.props.store;
+        this.activity = this.props.activity;
 
         this.state = {
             questions: [],
@@ -27,7 +28,7 @@ class MatchingStudentView extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         let activity = this.store.findActivity(this.props.activityid);
-        activity.studentAnswers = this.state.answer;
+        activity.studentAnswerData = this.state.answer;
     }
 
     populateComponent() {
@@ -52,9 +53,8 @@ class MatchingStudentView extends React.Component {
     }
 
     componentDidMount() {
-        let activity = this.store.findActivity(this.props.activityid);
-        let questions = [...activity.questions];
-        let correctAnswers = activity.correctAnswers;
+        let questions = [...this.activity.questionData];
+        let correctAnswers = this.activity.correctAnswerData;
         if(questions && correctAnswers) {
             this.setState({correctAnswers: getRandomizedCorrectAnswerArray(correctAnswers)});
             this.setState({questions: questions}, () => {
@@ -73,7 +73,7 @@ class MatchingStudentView extends React.Component {
             </Form.Group>
         );
     }
-};
+});
 
 const QuestionAnswerOptionForm = (props) => {
     return(

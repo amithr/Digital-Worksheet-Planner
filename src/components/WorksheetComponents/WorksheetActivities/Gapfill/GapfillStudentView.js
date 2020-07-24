@@ -1,17 +1,15 @@
 import React from 'react';
+import { observer } from "mobx-react";
 import { Form, Button} from 'react-bootstrap';
 import { stringToArray, transformArrayToString } from './GapfillHelpers.js'
 
 //Immediate Feedback Optional?
 
-class GapfillStudentView extends React.Component {
+const GapfillStudentView = observer(class GapfillStudentView extends React.Component {
     constructor(props) {
         super(props);
 
-        this.store = this.props.store;
-        //I don't normally initialize an activity object, but this was used in more than one place
-        //in this component.
-        this.activity = this.store.findActivity(this.props.activityid);
+        this.activity = this.props.activity;
 
         this.state = {
             questionGapfillText:"",
@@ -37,12 +35,11 @@ class GapfillStudentView extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        this.activity.studentAnswers = this.state.studentAnswers;
-        console.log(this.activity);
+        this.activity.studentAnswerData = this.state.studentAnswers;
     }
 
     //Run this onComponentMount to convert text from teacher view to gapfill in student view.
-    convertQuestionTexttoGapfill = () => {
+    populateComponent = (questionText) => {
         //Turn the text into an array of strings.
         //Find the array element with a $ symbol, indicating a gapfill.
         //Separate the $ symbol and the gapfill answer.
@@ -50,7 +47,6 @@ class GapfillStudentView extends React.Component {
         //Insert a formfield component in its place.
         //Turn the array back into a string.
         //Store correctAnswers and answerFormFieldArray in state object.
-        let questionText = this.props.question;
         let questionTextArray = stringToArray(questionText);
         let questionNumber = 0;
         let correctAnswers = [];
@@ -78,17 +74,18 @@ class GapfillStudentView extends React.Component {
         //Change text array back to a string that can be displayed
         let questionTextWithGapfills = transformArrayToString(questionTextArray);
         this.setState({questionGapfillText: questionTextWithGapfills});
-        this.setState({correctAnswers: correctAnswers});
         this.setState({answerFormFieldArray: answerFormFieldArray});
+        this.setState({correctAnswers: correctAnswers}, () => {return correctAnswers});
+        
     }
 
     // When component mounts, immediately change teacher defined text into a gapfill
     // for the student to view.
     componentDidMount() {
-        if(this.props.question) {
-            this.convertQuestionTexttoGapfill();
-            //This is here because the questions and answers were submitted as a string from the teacher view.
-            this.activity.correctAnswers = this.state.correctAnswers;
+        let questionText = this.activity.questionData;
+        if(questionText) {
+            let correctAnswers = this.populateComponent(questionText);
+            this.activity.correctAnswerData = correctAnswers;
         }
     }
 
@@ -102,6 +99,6 @@ class GapfillStudentView extends React.Component {
             </Form.Group>
         );
     }
-};
+});
 
 export default GapfillStudentView;

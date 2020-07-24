@@ -1,14 +1,13 @@
 import React from 'react';
+import { observer } from "mobx-react";
 import PropTypes from 'prop-types';
 import { Form, Button } from 'react-bootstrap';
-import { mergeQuestionAndAnswerArrays } from './MatchingHelpers';
 
-class MatchingTeacherView extends React.Component {
+const MatchingTeacherView = observer(class MatchingTeacherView extends React.Component {
     constructor(props) {
         super(props);
 
-        this.store = this.props.store;
-        this.activity = this.store.findActivity(this.props.activityid);
+        this.activity = this.props.activity;
 
         this.state = {
             questions: [],
@@ -16,8 +15,6 @@ class MatchingTeacherView extends React.Component {
             questionAnswerPairFormArray:[],
             questionAnswerPairNumber: 0
         };
-
-        this.timer = [];
         
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -46,8 +43,8 @@ class MatchingTeacherView extends React.Component {
         event.preventDefault();
         console.log("Submit state " + this.state.questions);
         console.log("Submit answers " + this.state.answers);
-        this.activity.questions = this.state.questions;
-        this.activity.correctAnswers = this.state.answers;
+        this.activity.questionData = this.state.questions;
+        this.activity.correctAnswerData = this.state.answers;
     }
 
     addNewQuestionAnswerPair(event) {
@@ -104,8 +101,8 @@ class MatchingTeacherView extends React.Component {
     }
  
     componentDidMount() {
-        let activityQuestions = this.activity.questions;
-        let activityCorrectAnswers = this.activity.correctAnswers;
+        let activityQuestions = this.activity.questionData;
+        let activityCorrectAnswers = this.activity.correctAnswerData;
         if(activityQuestions && activityCorrectAnswers) {
             this.populateComponent(activityQuestions, activityCorrectAnswers);
         }
@@ -122,7 +119,7 @@ class MatchingTeacherView extends React.Component {
             </Form.Group>
         );
     }
-};
+});
 
 const QuestionAnswerPairForm = (props) => {
     return(
