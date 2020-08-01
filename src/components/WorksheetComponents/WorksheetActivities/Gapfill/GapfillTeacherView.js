@@ -26,7 +26,7 @@ const GapfillTeacherView = observer(class GapfillTeacherView extends React.Compo
     }
 
     populateComponent(questionText) {
-        this.state.setState({question: questionText});
+        this.setState({question: questionText});
     }
 
     componentDidMount() {

@@ -6,9 +6,9 @@ export default class Activity {
     author = null;
     activityType = null;
     //There could be one answer or many answers
-    questionData = null;
-    studentAnswerData = null;
-    correctAnswerData = null;
+    questionData = "";
+    studentAnswerData = "";
+    correctAnswerData = "";
     wordCount = 100;
     position = 0;
     score = 0;

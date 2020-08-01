@@ -1,9 +1,10 @@
 import React from 'react';
+import { observer } from "mobx-react";
 import { Form, Button} from 'react-bootstrap';
 import StudentView from './MultipleChoiceStudentView';
 import TeacherView from './MultipleChoiceTeacherView';
 
-class IndividualMultipleChoiceQuestion extends React.Component {
+const IndividualMultipleChoiceQuestion = observer(class IndividualMultipleChoiceQuestion extends React.Component {
     constructor(props) {
         super(props);
 
@@ -21,32 +22,29 @@ class IndividualMultipleChoiceQuestion extends React.Component {
 
     renderInner = () => {
         let { display } = this.state;
-        
         if (display === 'student') {
-          return <StudentView store={this.props.store} 
-          question={this.props.question} 
-          correctAnswer={this.props.correctAnswer} 
-          studentAnswer={this.props.studentAnswer} 
-          answerOptions={this.props.answerOptions} 
-          activityid={this.props.activityid} />
+            return <StudentView
+                index={this.props.index}
+                activity={this.props.activity}   />
         } else if (display === 'teacher') {
-          return <TeacherView store={this.props.store} 
-          correctAnswer={this.props.correctAnswer}
-          question={this.props.question} 
-          answerOptions={this.props.answerOptions} 
-          activityid={this.props.activityid} />
-        }
+            return <TeacherView
+                index={this.props.index}
+                activity={this.props.activity}   />
+            }
     };
 
     render() {
         return(
-            <Form onSubmit = {this.handleSubmit} position={this.props.position}>
-                <p>Hello! This is the multiple choice activity!</p>
-                <Button onClick={this.changeDisplay}>Change Display</Button>
-                {this.renderInner()}
-            </Form>
+            <div>
+                <h1>{this.props.index + 1}</h1>
+                <Form onSubmit = {this.handleSubmit} position={this.props.position}>
+                    <p>Hello! This is the multiple choice activity!</p>
+                    <Button onClick={this.changeDisplay}>Change Display</Button>
+                    {this.renderInner()}
+                </Form>
+            </div>
         );
     }
-};
+});
 
 export default IndividualMultipleChoiceQuestion;

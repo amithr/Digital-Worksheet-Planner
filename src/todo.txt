@@ -1,4 +1,6 @@
-- Make the user interface drag-and-drop enabled
+- Make the user interface drag-and-drop enabled (introduce positions that can be saved into the activity)
 - Instead of passing different activity attributes, just pass the activity in the WorksheetActivityArea
 - Implement unit testing for helpers and integration testing for the app (when it's 75% finished)
 - Implement answer submission feedback (especially in Gapfill)
+- Initialize state in constructor instead of populateComponent function
+- Use popmotion.io to animate certain aspects?
