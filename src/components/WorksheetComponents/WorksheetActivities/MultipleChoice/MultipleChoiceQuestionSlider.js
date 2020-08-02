@@ -23,16 +23,15 @@ const MultipleChoiceQuestionSlider = observer(class MultipleChoiceQuestionSlider
         this.changeDisplay = this.changeDisplay.bind(this);
     };
 
+    renderQuestion = (questionIndex) => {
+        this.setState({currentQuestion: this.state.questions[questionIndex]})
+    };
+
     changeDisplay = (event) => {
         let currentQuestionIndex = event.target.getAttribute('data-index');
         console.log('Current Question Index '+ currentQuestionIndex);
         this.setState({ currentQuestionIndex: currentQuestionIndex });
-        this.setState({currentQuestion: this.state.questions[currentQuestionIndex]})
-    };
-
-    renderInner = () => {
-        let currentQuestionIndex = this.state.currentQuestion;
-        return this.state.questions[currentQuestionIndex];
+        this.renderQuestion(currentQuestionIndex);
     };
 
     generateQuestionsLinks = () => {
@@ -60,10 +59,10 @@ const MultipleChoiceQuestionSlider = observer(class MultipleChoiceQuestionSlider
             
             questions.push(individualQuestion);
         }
-
-
+        this.setState({currentQuestion: questions[0]})
         this.setState({questions: questions});
         this.generateQuestionsLinks();
+
     }
 
     componentDidUpdate(nextProps) {
@@ -75,13 +74,14 @@ const MultipleChoiceQuestionSlider = observer(class MultipleChoiceQuestionSlider
     componentDidMount() {
         if(this.props.questionNumber > 0) {
             this.populateComponent();
+        } else {
+            
         }     
     }
 
     render() {
         return(
             <div>
-                <p>Hello! This is the multiple choice question slider!</p>
                 <QuestionLinkMenu questionsLinks={this.state.questionsLinks} />
                 {this.state.currentQuestion}
             </div>

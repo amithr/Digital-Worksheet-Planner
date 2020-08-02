@@ -20,14 +20,24 @@ const MultipleChoiceTeacherView  = observer(class MultipleChoiceTeacherView exte
         };
 
         this.activity = this.props.activity;
-        this.questionData = this.activity.questionData[this.props.index];
-        this.correctAnswer = this.activity.correctAnswerData[this.props.index];
+
         
         this.handleQuestionChange = this.handleQuestionChange.bind(this);
         this.handleAnswerOptionChange = this.handleAnswerOptionChange.bind(this);
         this.handleRadioOptionChange = this.handleRadioOptionChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     };
+
+    saveData() {
+        let question = {
+            question: this.state.question,
+            answerOptions: this.state.answerOptions
+        }
+        //Assign to respective index in activity data sets
+        let correctAnswer =  this.state.isSelectedArray.indexOf(true);
+        this.activity.questionData[this.props.index] = question;
+        this.activity.correctAnswerData[this.props.index] = correctAnswer;
+    }
 
     handleQuestionChange(event) {
         this.setState({question: event.target.value});
@@ -53,29 +63,33 @@ const MultipleChoiceTeacherView  = observer(class MultipleChoiceTeacherView exte
     }
 
     handleSubmit(event) {
-        let question = {
-            question: this.state.question,
-            answerOptions: this.state.answerOptions
-        }
-        //Assign to respective index in activity data sets
-        let correctAnswer =  this.state.isSelectedArray.indexOf(true);
-        this.questionData = question;
-        this.correctAnswer = correctAnswer;
+        this.saveData();
         event.preventDefault();       
     }
 
     populateComponent() {
-        this.setState({question: this.questionData.question});
-        this.setState({answerOptions: this.questionData.answerOptions})
+        this.setState({question: this.activity.questionData[this.props.index].question});
+        this.setState({answerOptions: this.activity.questionData[this.props.index].answerOptions})
+
         let isSelectedArray = this.state.answerOptions.map((_, index) => {
             return (this.correctAnswer === index); 
         });
+
         this.setState({isSelectedArray: isSelectedArray });
+    }
+
+    componentWillUnmount() {
+        this.saveData();
+        console.log('component will unmount')
+
     }
 
     componentDidMount() {
         if(this.questionData) {
             this.populateComponent();
+        } else {
+            this.activity.questionData = [];
+            this.activity.correctAnswerData = []
         }
     }
 

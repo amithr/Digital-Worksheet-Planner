@@ -15,7 +15,7 @@ const MultipleChoice = observer(class MultipleChoice extends React.Component {
         // Default state should be teacher for dev purposes
         this.state = {
             //Includes question and options
-            questionNumber: 0
+            questionNumber: 1
         };
 
         this.addQuestion = this.addQuestion.bind(this);
@@ -31,22 +31,24 @@ const MultipleChoice = observer(class MultipleChoice extends React.Component {
 
     removeQuestion = (event) => {
         let questionIndex = event.target.getAttribute('key');
-        this.activity.questionData.splice(questionIndex, 1);
+        if(this.activity.questionData) {
+            this.activity.questionData.splice(questionIndex, 1);
+        }
     }
     
     populateComponent = () => {
     }
 
     componentDidMount = () => {
-        if(this.activity.questionData) {
-            this.setState({questionNumber: this.activity.questionData.length}) 
+        let questionData = this.activity.questionData;
+        if(questionData) {
+            this.setState({questionNumber: questionData.length})
         }
     }
 
     render() {
         return(
             <div position={this.activity.position}>
-                <p>This is the multiple choice activity.</p>
                 <Button onClick={this.addQuestion}>+</Button><Button onClick={this.removeQuestion}>-</Button>
                 <MultipleChoiceQuestionSlider activity={this.activity} questionNumber={this.state.questionNumber}></MultipleChoiceQuestionSlider>
             </div>

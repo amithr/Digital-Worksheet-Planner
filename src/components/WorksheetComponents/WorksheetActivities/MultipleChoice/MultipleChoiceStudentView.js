@@ -7,14 +7,13 @@ const MultipleChoiceStudentView = observer(class MultipleChoiceStudentView exten
         super(props);
 
         this.activity = this.props.activity;
-        this.questionData = this.activity.questionData[this.props.index];
 
         this.state = {
-            question: this.questionData.question,
-            answerOptions: [...this.questionData.answerOptions],
-            correctAnswer: this.activity.correctAnswerData[this.props.index].correctAnswer,
+            question: "Fill in question and answer options.",
+            answerOptions: [],
+            correctAnswer: 0,
             studentAnswer: 0,
-            isSelectedArray: [false, false, false, false, false]
+            isSelectedArray: [true, false, false, false, false]
         };
 
         
@@ -40,12 +39,17 @@ const MultipleChoiceStudentView = observer(class MultipleChoiceStudentView exten
     }
 
     populateComponent() {
+        this.setState({ question: this.activity.questionData[this.props.index].question})
+        this.setState({ answerOptions: [...this.activity.questionData[this.props.index].answerOptions]});
+        this.setState({ correctAnswer: this.activity.correctAnswerData[this.props.index].correctAnswer}, () => {
+            let isSelectedArray = this.state.isSelectedArray;
+            isSelectedArray[this.state.correctAnswer] = true;
+            this.setState({ isSelectedArray: isSelectedArray});
+        });
     }
 
     componentDidMount() {
-        if(this.questionData.question) {
-            this.populateComponent();
-        }
+        this.populateComponent();
     }
 
     render() {
