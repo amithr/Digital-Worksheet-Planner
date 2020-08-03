@@ -29,7 +29,7 @@ const MultipleChoiceQuestionSlider = observer(class MultipleChoiceQuestionSlider
 
     changeDisplay = (event) => {
         let currentQuestionIndex = event.target.getAttribute('data-index');
-        console.log('Current Question Index '+ currentQuestionIndex);
+        console.log("Current Multiple Choice Question: " + this.state.questionNumber);
         this.setState({ currentQuestionIndex: currentQuestionIndex });
         this.renderQuestion(currentQuestionIndex);
     };
@@ -67,8 +67,10 @@ const MultipleChoiceQuestionSlider = observer(class MultipleChoiceQuestionSlider
     }
 
     componentDidUpdate(nextProps) {
+        //Update slider with new questions
         if(nextProps.questionNumber != this.props.questionNumber) {
             this.populateComponent();
+            console.log('Updated slider with new question');
         }
     }
 

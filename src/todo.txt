@@ -8,3 +8,4 @@
 - Look into how to update student frontend in real time to react to changes
 - Build standardized logging system
 - Add a top bar
+- Add tooltips to help user

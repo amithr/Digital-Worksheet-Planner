@@ -80,7 +80,7 @@ const MultipleChoiceTeacherView  = observer(class MultipleChoiceTeacherView exte
 
     componentWillUnmount() {
         this.saveData();
-        console.log('component will unmount')
+        console.log("Question or view is about to be changed, teacher view data being saved")
 
     }
 

@@ -18,6 +18,7 @@ const MatchingTeacherView = observer(class MatchingTeacherView extends React.Com
         
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.deleteQuestionAnswerPair = this.deleteQuestionAnswerPair.bind(this);
     };
 
     handleChange(event) {
@@ -35,14 +36,11 @@ const MatchingTeacherView = observer(class MatchingTeacherView extends React.Com
             intermediateArray = [...this.state.answers];
             intermediateArray[questionAnswerPairNumber] = fieldValue;
             this.setState({answers: intermediateArray });
-            console.log("correctAnswersEvent" + intermediateArray);
         }
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log("Submit state " + this.state.questions);
-        console.log("Submit answers " + this.state.answers);
         this.activity.questionData = this.state.questions;
         this.activity.correctAnswerData = this.state.answers;
     }
@@ -52,16 +50,25 @@ const MatchingTeacherView = observer(class MatchingTeacherView extends React.Com
         //Create new question/answer object
         let questionAnswerPairFormObject = <QuestionAnswerPairForm key={questionAnswerPairNumber} questionAnswerPairNumber={questionAnswerPairNumber} 
         handleChange={this.handleChange} deleteQuestionAnswerPair={this.deleteQuestionAnswerPair} />;
-        //Add new question/answer object to array
-        this.setState({questionAnswerPairFormArray: [...this.state.questionAnswerPairFormArray, questionAnswerPairFormObject]});
+        //Add new question/answer object to array - NOTE: need to use 3-dot notation to reflect array change in DOM
+        this.setState({questionAnswerPairFormArray: [...this.state.questionAnswerPairFormArray, questionAnswerPairFormObject]}, () => {
+            console.log('addNewQuestionAnswerPair' + this.state.questionAnswerPairFormArray);
+        });
         // Increment Question Answer Pair number
         questionAnswerPairNumber++;
         this.setState({questionAnswerPairNumber: questionAnswerPairNumber});
-        console.log('addNewQuestionAnswerPairNumber' + questionAnswerPairNumber);
     }
 
     deleteQuestionAnswerPair(event) {
+        let questionAnswerPairFormArray = this.state.questionAnswerPairFormArray;
+        let questionAnswerPairNumber = event.target.getAttribute('data-question-answer-pair-number')
 
+        questionAnswerPairFormArray.splice(questionAnswerPairNumber, 1);
+        //NOTE: need to use 3-dot notation to reflect array change in DOM
+        this.setState({questionAnswerPairFormArray: [...questionAnswerPairFormArray]});
+
+        let newQuestionAnswerPairNumber = this.state.questionAnswerPairNumber - 1;
+        this.setState({questionAnswerPairNumber: newQuestionAnswerPairNumber});
     }
 
     populateComponent(activityQuestions, activityCorrectAnswers) {
@@ -77,7 +84,8 @@ const MatchingTeacherView = observer(class MatchingTeacherView extends React.Com
                 question={activityQuestions[index]}
                 answer={activityCorrectAnswers[index]}
                 key={index} 
-                questionAnswerPairNumber={index} 
+                questionAnswerPairNumber={index}
+                deleteQuestionAnswerPair={this.deleteQuestionAnswerPair} 
                 handleChange={this.handleChange} />;
 
                 questionAnswerPairFormArray.push(questionAnswerPairFormObject)
@@ -145,7 +153,7 @@ const QuestionAnswerPairForm = (props) => {
                         placeholder={'Answer ' + (props.questionAnswerPairNumber+1)}
                         size="10"/>
                     </Col>
-                    <Button onClick={props.deleteQuestionAnswerPair}>x</Button>
+                    <Button data-question-answer-pair-number={props.questionAnswerPairNumber} onClick={props.deleteQuestionAnswerPair}>x</Button>
                 </Row>
             </Container>
      );

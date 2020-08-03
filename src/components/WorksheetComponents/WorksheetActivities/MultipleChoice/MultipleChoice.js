@@ -31,7 +31,7 @@ const MultipleChoice = observer(class MultipleChoice extends React.Component {
         this.setState({questionNumber: questionNumber});
         let initialQuestionValue = {question: '', answerOptions: []};
         this.activity.questionData.push(initialQuestionValue);
-        console.log(this.state.questionNumber);
+        console.log("New question added")
     }
 
     removeQuestion = (event) => {
@@ -41,12 +41,14 @@ const MultipleChoice = observer(class MultipleChoice extends React.Component {
         if(this.activity.questionData) {
             this.activity.questionData.splice(questionIndex, 1);
         }
+        console.log("Question of index " + questionIndex + " removed");
     }
     
     populateComponent = () => {
     }
 
     componentDidMount = () => {
+
         let questionData = this.activity.questionData;
         if(questionData) {
             this.setState({questionNumber: questionData.length})
