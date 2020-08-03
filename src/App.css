@@ -27,6 +27,7 @@
 
 .worksheet-activity-picker-column {
   display: flex;
+  align-items: center;
   flex-direction: column;
   flex: 30%;
 }
@@ -40,6 +41,7 @@
 
 .sidebar-column {
   flex: 30%;
+  align-items: center;
 }
 
 

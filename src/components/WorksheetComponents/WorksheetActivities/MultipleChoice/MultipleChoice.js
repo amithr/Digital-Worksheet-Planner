@@ -11,11 +11,14 @@ const MultipleChoice = observer(class MultipleChoice extends React.Component {
         super(props);
 
         this.activity = this.props.activity;
+        this.activity.questionData = [];
+        this.activity.correctAnswerData = []
+        this.activity.studentAnswerData = [];
 
         // Default state should be teacher for dev purposes
         this.state = {
             //Includes question and options
-            questionNumber: 1
+            questionNumber: 0
         };
 
         this.addQuestion = this.addQuestion.bind(this);
@@ -26,11 +29,15 @@ const MultipleChoice = observer(class MultipleChoice extends React.Component {
         let questionNumber = this.state.questionNumber;
         questionNumber++;
         this.setState({questionNumber: questionNumber});
+        let initialQuestionValue = {question: '', answerOptions: []};
+        this.activity.questionData.push(initialQuestionValue);
         console.log(this.state.questionNumber);
     }
 
     removeQuestion = (event) => {
-        let questionIndex = event.target.getAttribute('key');
+        let questionIndex = event.target.getAttribute('data-question-index');
+        let questionNumber = this.state.questionNumber - 1;
+        this.setState({questionNumber: questionNumber});
         if(this.activity.questionData) {
             this.activity.questionData.splice(questionIndex, 1);
         }
@@ -49,8 +56,8 @@ const MultipleChoice = observer(class MultipleChoice extends React.Component {
     render() {
         return(
             <div position={this.activity.position}>
-                <Button onClick={this.addQuestion}>+</Button><Button onClick={this.removeQuestion}>-</Button>
-                <MultipleChoiceQuestionSlider activity={this.activity} questionNumber={this.state.questionNumber}></MultipleChoiceQuestionSlider>
+                <Button onClick={this.addQuestion}>+</Button>
+                <MultipleChoiceQuestionSlider removeQuestion={this.removeQuestion} activity={this.activity} questionNumber={this.state.questionNumber}></MultipleChoiceQuestionSlider>
             </div>
         );
     }

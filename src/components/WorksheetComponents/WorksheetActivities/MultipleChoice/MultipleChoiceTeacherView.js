@@ -87,16 +87,13 @@ const MultipleChoiceTeacherView  = observer(class MultipleChoiceTeacherView exte
     componentDidMount() {
         if(this.questionData) {
             this.populateComponent();
-        } else {
-            this.activity.questionData = [];
-            this.activity.correctAnswerData = []
         }
     }
 
     render() {
         return(
         <Form.Group>
-            <p>This is the teacher view!</p>
+            <Button onClick={this.props.removeQuestion} data-question-index={this.props.index}>Remove</Button>
             <Form.Control as="textarea" rows="3" value={this.state.question} onChange={this.handleQuestionChange} />
                 <Container>
                     {this.state.answerOptions.map((answerOption, index) => 
@@ -107,7 +104,6 @@ const MultipleChoiceTeacherView  = observer(class MultipleChoiceTeacherView exte
                     handleRadioOptionChange={this.handleRadioOptionChange}
                     handleAnswerOptionChange={this.handleAnswerOptionChange} />)}
                 </Container>
-            <Button variant="primary" onClick={this.handleSubmit}>Submit</Button>
         </Form.Group>
         );
     }

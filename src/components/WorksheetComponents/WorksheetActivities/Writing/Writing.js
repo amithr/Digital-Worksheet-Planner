@@ -34,8 +34,8 @@ const Writing = observer(class Writing extends React.Component {
     render() {
         return(
             <Form onSubmit = {this.handleSubmit} position={this.props.position}>
-                <p>Hello! This is the writing activity!</p>
-                <Button onClick={this.changeDisplay}>Change Display</Button>
+                <p>Writing Activity</p>
+                <Button onClick={this.changeDisplay}>Switch View</Button>
                 {this.renderInner()}
             </Form>
         );

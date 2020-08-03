@@ -1,4 +1,5 @@
 import React from 'react';
+import './Writing.css';
 import { observer } from "mobx-react";
 import PropTypes from 'prop-types';
 import { Form, Button } from 'react-bootstrap';
@@ -48,10 +49,13 @@ const WritingTeacherView = observer(class WritingTeacherView extends React.Compo
     render() {
         return(
         <Form.Group>
-            <p>This is the teacher view!</p>
-            <Form.Control as="input" size="lg" data-field-type="wordcount" type="number" placeholder="# of words required" value={this.state.wordCount} onChange={this.handleChange} />
+            <p>Teacher View</p>
+            <Form.Label>Wordcount:</Form.Label>
+            <Form.Control className="wordcount" as="input" size="lg" data-field-type="wordcount" type="number"  value={this.state.wordCount} onChange={this.handleChange} />
+            <br />
+            <Form.Label>Question:</Form.Label>
             <Form.Control as="textarea" rows="3" data-field-type="question" value={this.state.question} onChange={this.handleChange} />
-            <Button variant="primary" onClick={this.handleSubmit}>Submit</Button>
+            <Button variant="primary" onClick={this.handleSubmit}>Save Question</Button>
         </Form.Group>
         );
     }

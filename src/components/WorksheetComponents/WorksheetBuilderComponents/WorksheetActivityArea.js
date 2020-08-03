@@ -1,4 +1,5 @@
 import React from 'react';
+import './WorksheetActivityArea.css';
 import { Button} from 'react-bootstrap';
 import { observer } from "mobx-react";
 import WorksheetActivityWriting from '../WorksheetActivities/Writing/Writing';
@@ -49,6 +50,7 @@ const WorksheetActivityArea = observer(class WorksheetActivityArea extends React
     render() {
         return (
             <div>
+                <br />
                 {this.renderActivities()}
             </div>
         );
@@ -68,7 +70,7 @@ class DeleteActivity extends React.Component {
         }
 
         render() {
-            return (<Button onClick={this.removeActivity}>x</Button>);
+            return (<Button className="activity-remove-button" onClick={this.removeActivity}>x</Button>);
         }
 };
 

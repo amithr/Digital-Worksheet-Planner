@@ -67,7 +67,7 @@ const MatchingStudentView = observer(class MatchingStudentView extends React.Com
     render() {
         return(
             <Form.Group >
-                <p>This is the student view!</p>
+                <p>Student View</p>
                 <div className="matching-activity-row">{this.state.questionAnswerOptionFormArray}</div>
                 <Button variant="primary" onClick = {this.handleSubmit}>Submit</Button>
             </Form.Group>

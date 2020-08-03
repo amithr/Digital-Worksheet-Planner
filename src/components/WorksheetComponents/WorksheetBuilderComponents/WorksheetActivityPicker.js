@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Row } from 'react-bootstrap';
 
 class WorksheetActivityPicker extends React.Component {
     constructor(props) {
@@ -12,8 +12,7 @@ class WorksheetActivityPicker extends React.Component {
             'gapfill': false,
             'matching': false,
             'multiple_choice': false,
-            'writing': false,
-            'sentence_builder':false
+            'writing': false
 
         }
 
@@ -21,8 +20,7 @@ class WorksheetActivityPicker extends React.Component {
             {id: 1, label:'Gapfill', keyword:'gapfill'}, 
             {id: 2, label:'Matching', keyword: 'matching'}, 
             {id: 3, label:'Multiple Choice', keyword: 'multiple_choice'}, 
-            {id: 4, label: 'Writing', keyword: 'writing'},
-            {id: 5, label: 'Sentence Builder', keyword: 'sentence_builder'}
+            {id: 4, label: 'Writing', keyword: 'writing'}
         ];
         
         
@@ -33,10 +31,12 @@ class WorksheetActivityPicker extends React.Component {
     renderActivityPickerForm = () => {
         let formArray = []
         this.activityArray.map((activityElement) => (
-            formArray.push(<Form.Check type="checkbox" label={activityElement.label}
-            key={activityElement.id}
-            value={activityElement.keyword}
-            onChange={this.selectActivity.bind(this)} />)
+            formArray.push(
+                <Form.Check type="checkbox" label={activityElement.label}
+                key={activityElement.id}
+                value={activityElement.keyword}
+                onChange={this.selectActivity.bind(this)} />
+            )
         ));
         return formArray;
     }
@@ -62,10 +62,12 @@ class WorksheetActivityPicker extends React.Component {
     
     render() {
         return (
-            <Form >
+            <Form.Group>
+                <br />
                 {this.renderActivityPickerForm()}
+                <br />
                 <Button onClick={this.handleSubmit}>Add</Button>
-            </Form>
+            </Form.Group>
     
         );
     }

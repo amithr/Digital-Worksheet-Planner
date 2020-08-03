@@ -29,7 +29,9 @@ const IndividualMultipleChoiceQuestion = observer(class IndividualMultipleChoice
         } else if (display === 'teacher') {
             return <TeacherView
                 index={this.props.index}
-                activity={this.props.activity}   />
+                activity={this.props.activity}
+                removeQuestion={this.props.removeQuestion}   
+                />
             }
     };
 

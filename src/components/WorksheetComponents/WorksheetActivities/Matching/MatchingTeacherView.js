@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from "mobx-react";
 import PropTypes from 'prop-types';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
 const MatchingTeacherView = observer(class MatchingTeacherView extends React.Component {
     constructor(props) {
@@ -112,10 +112,12 @@ const MatchingTeacherView = observer(class MatchingTeacherView extends React.Com
     render() {
         return(
             <Form.Group>
-                <p>This is the teacher view!</p>
+                <p>Teacher View</p>
                 <Button onClick={this.addNewQuestionAnswerPair.bind(this)}>+</Button>
+                <br />
                 {this.state.questionAnswerPairFormArray}
-                <Button variant="primary" onClick={this.handleSubmit}>Submit</Button>
+                <br />
+                <Button variant="primary" onClick={this.handleSubmit}>Save</Button>
             </Form.Group>
         );
     }
@@ -123,23 +125,29 @@ const MatchingTeacherView = observer(class MatchingTeacherView extends React.Com
 
 const QuestionAnswerPairForm = (props) => {
     return(
-            <div>
-                <Form.Control type="input" 
-                    data-field-type="question"
-                    data-question-answer-pair-number={props.questionAnswerPairNumber}
-                    defaultValue={props.question}
-                    onMouseOut={props.handleChange}
-                    placeholder={'Question ' + (props.questionAnswerPairNumber + 1)}
-                    size="10"/>
-                <Form.Control type="input"
-                    data-field-type="answer"
-                    data-question-answer-pair-number={props.questionAnswerPairNumber}
-                    defaultValue={props.answer}
-                    onMouseOut={props.handleChange}
-                    placeholder={'Answer ' + (props.questionAnswerPairNumber+1)}
-                    size="10"/>
-                <Button onClick={props.deleteQuestionAnswerPair}>x</Button>
-            </div>
+            <Container>
+                <Row>
+                    <Col>
+                        <Form.Control type="input" 
+                            data-field-type="question"
+                            data-question-answer-pair-number={props.questionAnswerPairNumber}
+                            defaultValue={props.question}
+                            onMouseOut={props.handleChange}
+                            placeholder={'Question ' + (props.questionAnswerPairNumber + 1)}
+                            size="10"/>
+                    </Col>
+                    <Col>
+                    <Form.Control type="input"
+                        data-field-type="answer"
+                        data-question-answer-pair-number={props.questionAnswerPairNumber}
+                        defaultValue={props.answer}
+                        onMouseOut={props.handleChange}
+                        placeholder={'Answer ' + (props.questionAnswerPairNumber+1)}
+                        size="10"/>
+                    </Col>
+                    <Button onClick={props.deleteQuestionAnswerPair}>x</Button>
+                </Row>
+            </Container>
      );
 }
 

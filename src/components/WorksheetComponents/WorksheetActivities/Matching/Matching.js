@@ -35,8 +35,8 @@ const Matching = observer(class Matching extends React.Component {
     render() {
         return(
             <Form onSubmit = {this.handleSubmit} position={this.activity.position}>
-                <p>Hello! This is the matching activity!</p>
-                <Button onClick={this.changeDisplay}>Change Display</Button>
+                <p>Matching Activity</p>
+                <Button onClick={this.changeDisplay}>Switch View</Button>
                 {this.renderInner()}
             </Form>
         );

@@ -35,8 +35,8 @@ const Gapfill = observer(class Gapfill extends React.Component {
     render() {
         return(
             <Form onSubmit = {this.handleSubmit} position={this.activity.position}>
-                <p>Hello! This is the gapfill!</p>
-                <Button onClick={this.changeDisplay}>Change Display</Button>
+                <p>Gapfill</p>
+                <Button onClick={this.changeDisplay}>Switch View</Button>
                 {this.renderInner()}
             </Form>
         );

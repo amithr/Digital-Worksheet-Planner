@@ -55,6 +55,7 @@ const MultipleChoiceQuestionSlider = observer(class MultipleChoiceQuestionSlider
             let individualQuestion = <IndividualMultipleChoiceQuestion 
             key={i}
             index={i}
+            removeQuestion={this.props.removeQuestion}
             activity={this.activity} />;
             
             questions.push(individualQuestion);
