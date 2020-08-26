@@ -2,6 +2,7 @@ import React from 'react';
 import './WorksheetActivityArea.css';
 import { Button} from 'react-bootstrap';
 import { observer } from "mobx-react";
+import Dragula from "react-dragula";
 import WorksheetActivityWriting from '../WorksheetActivities/Writing/Writing';
 import WorksheetActivityGapfill from '../WorksheetActivities/Gapfill/Gapfill';
 import WorksheetActivityMatching from '../WorksheetActivities/Matching/Matching';
@@ -27,8 +28,6 @@ const WorksheetActivityArea = observer(class WorksheetActivityArea extends React
         this.store.loadActivities();
     }
 
-    
-
     renderActivities() {
         let activityArray = [];
 
@@ -47,9 +46,17 @@ const WorksheetActivityArea = observer(class WorksheetActivityArea extends React
         return activityArray;
     }
 
+    // Helps implement drag and drop functionality
+    dragulaDecorator = (componentBackingInstance) => {
+        if (componentBackingInstance) {
+          let options = { };
+          Dragula([componentBackingInstance], options);
+        }
+    }
+
     render() {
         return (
-            <div>
+            <div ref={this.dragulaDecorator}>
                 <br />
                 {this.renderActivities()}
             </div>

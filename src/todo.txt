@@ -9,3 +9,4 @@
 - Build standardized logging system
 - Add a top bar
 - Add tooltips to help user
+- Make compliant with screen readers, etc.

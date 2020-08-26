@@ -55,7 +55,7 @@ const MultipleChoiceStudentView = observer(class MultipleChoiceStudentView exten
     render() {
         return(
             <Form.Group >
-                <p>This is the student view!</p>
+                <p>Student View</p>
                 <p>Question: {this.state.question}</p>
                 {this.state.answerOptions.map((answerOption, index) => 
                 <StudentAnswerOption key={index} 

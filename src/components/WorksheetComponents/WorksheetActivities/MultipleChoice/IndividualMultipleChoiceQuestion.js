@@ -38,9 +38,10 @@ const IndividualMultipleChoiceQuestion = observer(class IndividualMultipleChoice
     render() {
         return(
             <div>
-                <h1>{this.props.index + 1}</h1>
+                <br />
+                <h3>Q{this.props.index + 1}.</h3>
                 <Form onSubmit = {this.handleSubmit} position={this.props.position}>
-                    <Button onClick={this.changeDisplay}>Change Display</Button>
+                    <Button onClick={this.changeDisplay}>Switch View</Button>
                     {this.renderInner()}
                 </Form>
             </div>

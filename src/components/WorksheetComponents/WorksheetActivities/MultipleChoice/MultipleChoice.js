@@ -31,6 +31,7 @@ const MultipleChoice = observer(class MultipleChoice extends React.Component {
         this.setState({questionNumber: questionNumber});
         let initialQuestionValue = {question: '', answerOptions: []};
         this.activity.questionData.push(initialQuestionValue);
+        this.activity.correctAnswerData.push(0);
         console.log("New question added")
     }
 
@@ -58,6 +59,8 @@ const MultipleChoice = observer(class MultipleChoice extends React.Component {
     render() {
         return(
             <div position={this.activity.position}>
+                <p>Multiple Choice Activity</p>
+                <p>Click the '+' button to add a new question. (10 question limit)</p>
                 <Button onClick={this.addQuestion}>+</Button>
                 <MultipleChoiceQuestionSlider removeQuestion={this.removeQuestion} activity={this.activity} questionNumber={this.state.questionNumber}></MultipleChoiceQuestionSlider>
             </div>

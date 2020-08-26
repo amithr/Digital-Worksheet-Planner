@@ -18,7 +18,7 @@ const WorksheetBuilder = observer(class Worksheet extends React.Component {
                     <WorksheetActivityPicker store={this.props.store} />
                 </div>
                 <div className="worksheet-activity-area-column">
-                    <WorksheetActivityArea store={this.props.store} />
+                    <WorksheetActivityArea store={this.props.store} droppableId={"activity-area-droppable-area"}/>
                 </div>
             </div>
         );

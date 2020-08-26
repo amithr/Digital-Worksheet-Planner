@@ -93,8 +93,11 @@ const MultipleChoiceTeacherView  = observer(class MultipleChoiceTeacherView exte
     render() {
         return(
         <Form.Group>
-            <Button onClick={this.props.removeQuestion} data-question-index={this.props.index}>Remove</Button>
+            <p>Teacher View</p>
+            <Button onClick={this.props.removeQuestion} data-question-index={this.props.index}>Remove Question</Button>
+            <br /><br />
             <Form.Control as="textarea" rows="3" value={this.state.question} onChange={this.handleQuestionChange} />
+            <br />
                 <Container>
                     {this.state.answerOptions.map((answerOption, index) => 
                     <TeacherAnswerOption key={index} 

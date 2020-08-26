@@ -60,7 +60,10 @@ const MultipleChoiceQuestionSlider = observer(class MultipleChoiceQuestionSlider
             
             questions.push(individualQuestion);
         }
-        this.setState({currentQuestion: questions[0]})
+
+        let mostRecentQuestionIndex = this.props.questionNumber - 1;
+        //Display most recent question
+        this.setState({currentQuestion: questions[mostRecentQuestionIndex]})
         this.setState({questions: questions});
         this.generateQuestionsLinks();
 
@@ -70,7 +73,7 @@ const MultipleChoiceQuestionSlider = observer(class MultipleChoiceQuestionSlider
         //Update slider with new questions
         if(nextProps.questionNumber != this.props.questionNumber) {
             this.populateComponent();
-            console.log('Updated slider with new question');
+            console.log('Updated slider');
         }
     }
 
@@ -85,6 +88,7 @@ const MultipleChoiceQuestionSlider = observer(class MultipleChoiceQuestionSlider
     render() {
         return(
             <div>
+                <br />
                 <QuestionLinkMenu questionsLinks={this.state.questionsLinks} />
                 {this.state.currentQuestion}
             </div>

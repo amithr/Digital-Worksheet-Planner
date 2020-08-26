@@ -39,7 +39,8 @@ const GapfillTeacherView = observer(class GapfillTeacherView extends React.Compo
     render() {
         return(
         <Form.Group>
-            <p>This is the teacher view!</p>
+            <p>Teacher View</p>
+            <br />
             <p>Type your text in the box below. Wherever you would like a gapfill, type a '$' directly followed by the answer.
             </p>
             <Form.Control as="textarea" rows="3" value={this.state.question} onChange={this.handleChange} />

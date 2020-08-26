@@ -17,7 +17,7 @@ const Worksheets = observer(class Worksheet extends React.Component {
     render() {
         return (
             <div className="row">
-                <WorksheetBuilder store={this.activityStore} />
+                <WorksheetBuilder store={this.activityStore}/>
                 {/*Sidebar Column */}
                 <div className="sidebar-column">
                     <Sidebar />
