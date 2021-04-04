@@ -36,7 +36,8 @@ const WorksheetActivityArea = observer(class WorksheetActivityArea extends React
             activityArray.push(
                 <div key={index}>
                     <DeleteActivity store={this.store} activity={activity} />    
-                    <ActivityComponent
+                    <ActivityComponent 
+                        store={this.store}
                         activity = {activity}
                          />
                 </div>

@@ -26,9 +26,9 @@ const Matching = observer(class Matching extends React.Component {
         let { display } = this.state;
         
         if (display === 'student') {
-          return <StudentView activity={this.activity} />
+          return <StudentView store={this.store} activity={this.activity} />
         } else if (display === 'teacher') {
-          return <TeacherView activity={this.activity} />
+          return <TeacherView store={this.store} activity={this.activity} />
         }
     };
 

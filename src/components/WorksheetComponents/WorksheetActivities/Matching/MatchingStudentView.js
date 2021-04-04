@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { observer } from "mobx-react";
 import { Form, Button} from 'react-bootstrap';
 import { getRandomizedCorrectAnswerArray } from './MatchingHelpers';
 import './Matching.css';
 
-const MatchingStudentView = observer(class MatchingStudentView extends React.Component {
+const MatchingStudentViewDefault = observer(class MatchingStudentView extends React.Component {
     constructor(props) {
         super(props);
 
@@ -75,6 +75,81 @@ const MatchingStudentView = observer(class MatchingStudentView extends React.Com
     }
 });
 
+
+const  MatchingStudentView = observer((props) => {
+    const [answer, setAnswer] = useState("");
+    const [questions, setQuestions] = useState([]);
+    const [correctAnswers, setCorrectAnswers] = useState([]);
+    const [studentAnswers, setStudentAnswers] = useState([]);
+    const [questionAnswerOptionFormArray, setQuestionAnswerOptionFormArray] = useState([]);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        let activity = props.store.findActivity(props.activityid);
+        activity.studentAnswerData = answer;
+    }
+
+    const handleChange = (event) => {
+        setAnswer(event.target.value)
+    }
+
+    const populateComponent = () => {
+        let tempQuestionAnswerOptionFormArray = [];
+
+        for(let index = 0; index < questions.length; index++) {
+            let questionAnswerOptionFormObject = <QuestionAnswerOptionForm
+                key={index}
+                question = {questions[index]}
+                //(Randomized correct answer)
+                correctAnswer = {correctAnswers[index]}
+                questionNumber={index}
+                handleChange={handleChange}
+            />
+
+            tempQuestionAnswerOptionFormArray.push(questionAnswerOptionFormObject);
+        }
+
+        setquestionAnswerOptionFormArray([...tempQuestionAnswerOptionFormArray, questionAnswerOptionFormArray]);
+    }
+
+    useEffect(() => {
+        let questionsFromStore = [...props.activity.questionData];
+        let correctAnswersFromStore = props.activity.correctAnswerData;
+        if(questionsFromStore && correctAnswersFromStore) {
+            setCorrectAnswers(getRandomizedCorrectAnswerArray(correctAnswersFromStore))
+            setQuestions(questionsFromStore);
+        }
+    }, []);
+
+    useEffect(() => {
+        // Repopulate the student view whenever new questions are added
+        let tempQuestionAnswerOptionFormArray = [];
+
+        for(let index = 0; index < questions.length; index++) {
+            let questionAnswerOptionFormObject = <QuestionAnswerOptionForm
+                key={index}
+                question = {questions[index]}
+                //(Randomized correct answer)
+                correctAnswer = {correctAnswers[index]}
+                questionNumber={index}
+                handleChange={handleChange}
+            />
+
+            tempQuestionAnswerOptionFormArray.push(questionAnswerOptionFormObject);
+        }
+
+        setQuestionAnswerOptionFormArray([...tempQuestionAnswerOptionFormArray, questionAnswerOptionFormArray]);
+    }, [questions])
+
+    return(
+        <Form.Group >
+            <p>Student View</p>
+            <div className="matching-activity-row">{questionAnswerOptionFormArray}</div>
+            <Button variant="primary" onClick = {handleSubmit}>Submit</Button>
+        </Form.Group>
+    );
+});
+
 const QuestionAnswerOptionForm = (props) => {
     return(
         <div className="matching-activity-row">
@@ -84,7 +159,7 @@ const QuestionAnswerOptionForm = (props) => {
                     defaultValue={''}
                     onMouseOut={props.handleChange}
                     placeholder={'Question ' + (props.questionNumber + 1)}
-                    maxLength="2"/>
+                    maxLength="20"/>
             <p className="matching-activity-column">{'   '+props.correctAnswer}</p>
         </div>
     );
