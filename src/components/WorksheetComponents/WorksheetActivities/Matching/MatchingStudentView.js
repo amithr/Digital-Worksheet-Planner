@@ -4,7 +4,7 @@ import { Form, Button} from 'react-bootstrap';
 import { getRandomizedCorrectAnswerArray } from './MatchingHelpers';
 import './Matching.css';
 
-const MatchingStudentViewDefault = observer(class MatchingStudentView extends React.Component {
+const MatchingStudentView = observer(class MatchingStudentView extends React.Component {
     constructor(props) {
         super(props);
 
@@ -22,13 +22,29 @@ const MatchingStudentViewDefault = observer(class MatchingStudentView extends Re
     };
 
     handleChange(event) {
-        this.setState({answer: event.target.value});
+        let questionNumber = event.target.getAttribute('data-question-number')
+        let questionAnswer = event.target.value
+        console.log(event.target.value);
+        console.log(event.target.getAttribute('data-question-number'));
+        this.setStudentAnswers(questionNumber, questionAnswer);
     }
 
     handleSubmit(event) {
         event.preventDefault();
+        this.transferStateToActivity();
+    }
+
+    setStudentAnswers(questionNumber, value) {
+        let intermediateStudentAnswersArray = [];
+        intermediateStudentAnswersArray = this.state.studentAnswers;
+        intermediateStudentAnswersArray[questionNumber] = value;
+        this.setState({studentAnswers: intermediateStudentAnswersArray});
+        this.transferStateToActivity();
+    }
+
+    transferStateToActivity() {
         let activity = this.store.findActivity(this.props.activityid);
-        activity.studentAnswerData = this.state.answer;
+        activity.studentAnswerData = this.state.studentAnswers;
     }
 
     populateComponent() {
@@ -53,11 +69,11 @@ const MatchingStudentViewDefault = observer(class MatchingStudentView extends Re
     }
 
     componentDidMount() {
-        let questions = [...this.activity.questionData];
-        let correctAnswers = this.activity.correctAnswerData;
-        if(questions && correctAnswers) {
-            this.setState({correctAnswers: getRandomizedCorrectAnswerArray(correctAnswers)});
-            this.setState({questions: questions}, () => {
+        let activityQuestions = [...this.activity.questionData];
+        let activityCorrectAnswers = this.activity.correctAnswerData;
+        if(activityQuestions && activityCorrectAnswers) {
+            this.setState({correctAnswers: getRandomizedCorrectAnswerArray(activityCorrectAnswers)});
+            this.setState({questions: activityQuestions}, () => {
                 //Populate component using state variables once the state has been set
                 this.populateComponent();
             });
@@ -75,89 +91,13 @@ const MatchingStudentViewDefault = observer(class MatchingStudentView extends Re
     }
 });
 
-
-const  MatchingStudentView = observer((props) => {
-    const [answer, setAnswer] = useState("");
-    const [questions, setQuestions] = useState([]);
-    const [correctAnswers, setCorrectAnswers] = useState([]);
-    const [studentAnswers, setStudentAnswers] = useState([]);
-    const [questionAnswerOptionFormArray, setQuestionAnswerOptionFormArray] = useState([]);
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        let activity = props.store.findActivity(props.activityid);
-        activity.studentAnswerData = answer;
-    }
-
-    const handleChange = (event) => {
-        setAnswer(event.target.value)
-    }
-
-    const populateComponent = () => {
-        let tempQuestionAnswerOptionFormArray = [];
-
-        for(let index = 0; index < questions.length; index++) {
-            let questionAnswerOptionFormObject = <QuestionAnswerOptionForm
-                key={index}
-                question = {questions[index]}
-                //(Randomized correct answer)
-                correctAnswer = {correctAnswers[index]}
-                questionNumber={index}
-                handleChange={handleChange}
-            />
-
-            tempQuestionAnswerOptionFormArray.push(questionAnswerOptionFormObject);
-        }
-
-        setquestionAnswerOptionFormArray([...tempQuestionAnswerOptionFormArray, questionAnswerOptionFormArray]);
-    }
-
-    useEffect(() => {
-        let questionsFromStore = [...props.activity.questionData];
-        let correctAnswersFromStore = props.activity.correctAnswerData;
-        if(questionsFromStore && correctAnswersFromStore) {
-            setCorrectAnswers(getRandomizedCorrectAnswerArray(correctAnswersFromStore))
-            setQuestions(questionsFromStore);
-        }
-    }, []);
-
-    useEffect(() => {
-        // Repopulate the student view whenever new questions are added
-        let tempQuestionAnswerOptionFormArray = [];
-
-        for(let index = 0; index < questions.length; index++) {
-            let questionAnswerOptionFormObject = <QuestionAnswerOptionForm
-                key={index}
-                question = {questions[index]}
-                //(Randomized correct answer)
-                correctAnswer = {correctAnswers[index]}
-                questionNumber={index}
-                handleChange={handleChange}
-            />
-
-            tempQuestionAnswerOptionFormArray.push(questionAnswerOptionFormObject);
-        }
-
-        setQuestionAnswerOptionFormArray([...tempQuestionAnswerOptionFormArray, questionAnswerOptionFormArray]);
-    }, [questions])
-
-    return(
-        <Form.Group >
-            <p>Student View</p>
-            <div className="matching-activity-row">{questionAnswerOptionFormArray}</div>
-            <Button variant="primary" onClick = {handleSubmit}>Submit</Button>
-        </Form.Group>
-    );
-});
-
 const QuestionAnswerOptionForm = (props) => {
     return(
         <div className="matching-activity-row">
             <p className="matching-activity-column">{props.question}</p>
             <Form.Control className="matching-activity-column" type="input" 
                     data-question-number={props.questionNumber}
-                    defaultValue={''}
-                    onMouseOut={props.handleChange}
+                    onKeyPress={props.handleChange}
                     placeholder={'Question ' + (props.questionNumber + 1)}
                     maxLength="20"/>
             <p className="matching-activity-column">{'   '+props.correctAnswer}</p>

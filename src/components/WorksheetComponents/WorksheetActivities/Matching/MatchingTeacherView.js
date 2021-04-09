@@ -21,6 +21,11 @@ const MatchingTeacherView = observer(class MatchingTeacherView extends React.Com
         this.deleteQuestionAnswerPair = this.deleteQuestionAnswerPair.bind(this);
     };
 
+    updateActivity() {
+        this.activity.questionData = this.state.questions;
+        this.activity.correctAnswerData = this.state.answers;
+    }
+
     handleChange(event) {
         //Use mouse out to initiate change to eliminate state updates.
         event.preventDefault();
@@ -37,12 +42,13 @@ const MatchingTeacherView = observer(class MatchingTeacherView extends React.Com
             intermediateArray[questionAnswerPairNumber] = fieldValue;
             this.setState({answers: intermediateArray });
         }
+
+        this.updateActivity();
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        this.activity.questionData = this.state.questions;
-        this.activity.correctAnswerData = this.state.answers;
+        this.updateActivity();
     }
 
     addNewQuestionAnswerPair(event) {
