@@ -30,7 +30,7 @@ class SentenceBuilderStudentView extends React.Component {
             <Form.Group >
                 <p>This is the student view!</p>
                 <p>Question: {this.props.question}</p>
-                <Form.Control as="textarea" value={this.state.answer} rows="3" onChange={this.handleChange}/>
+                <Form.Control as="textarea" value={this.state.answer} rows="3" onKeypress={this.handleChange}/>
                 <Button variant="primary" onClick = {this.handleSubmit}>Submit</Button>
             </Form.Group>
         );
