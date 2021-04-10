@@ -17,13 +17,18 @@ const WritingStudentView = observer(class WritingStudentView extends React.Compo
         this.handleSubmit = this.handleSubmit.bind(this);
     };
 
+    saveData() {
+        this.activity.studentAnswerData = this.state.studentAnswer;
+    }
+
     handleChange(event) {
         this.setState({studentAnswer: event.target.value});
+        this.saveData();
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        this.activity.studentAnswerData = this.state.studentAnswer;
+        this.saveData();
     }
 
     populateComponent() {

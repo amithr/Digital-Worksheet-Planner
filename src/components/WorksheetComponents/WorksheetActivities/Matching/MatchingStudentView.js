@@ -31,7 +31,7 @@ const MatchingStudentView = observer(class MatchingStudentView extends React.Com
 
     handleSubmit(event) {
         event.preventDefault();
-        this.transferStateToActivity();
+        this.saveData();
     }
 
     setStudentAnswers(questionNumber, value) {
@@ -39,10 +39,10 @@ const MatchingStudentView = observer(class MatchingStudentView extends React.Com
         intermediateStudentAnswersArray = this.state.studentAnswers;
         intermediateStudentAnswersArray[questionNumber] = value;
         this.setState({studentAnswers: intermediateStudentAnswersArray});
-        this.transferStateToActivity();
+        this.saveData();
     }
 
-    transferStateToActivity() {
+    saveData() {
         let activity = this.store.findActivity(this.props.activityid);
         activity.studentAnswerData = this.state.studentAnswers;
     }

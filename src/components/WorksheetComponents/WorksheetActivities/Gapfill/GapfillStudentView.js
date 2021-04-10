@@ -22,6 +22,10 @@ const GapfillStudentView = observer(class GapfillStudentView extends React.Compo
         this.handleSubmit = this.handleSubmit.bind(this);
     };
 
+    saveData() {
+        this.activity.studentAnswerData = this.state.studentAnswers;
+    }
+
     // Store student answers in student answers state array
     handleChange = (event) => {
         let questionNumber = event.target.placeholder;
@@ -31,12 +35,12 @@ const GapfillStudentView = observer(class GapfillStudentView extends React.Compo
         this.setState({
             studentAnswers: studentAnswers
         });
-        this.activity.studentAnswerData = this.state.studentAnswers;
+        this.saveData();
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
-        this.activity.studentAnswerData = this.state.studentAnswers;
+        this.saveData();
     }
 
     //Run this onComponentMount to convert text from teacher view to gapfill in student view.

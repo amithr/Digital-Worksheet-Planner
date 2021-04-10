@@ -13,9 +13,9 @@ const MultipleChoiceTeacherView  = observer(class MultipleChoiceTeacherView exte
         super(props);
 
         this.state = {
-            question:"Type your question here",
-            answerOptions: ["Question 1", "Question 2", "Question 3", "Question 4", "Question 5"],
-            isSelectedArray: [true, false, false, false, false]
+            question:"",
+            answerOptions: [],
+            isSelectedArray: []
             
         };
 
@@ -27,6 +27,16 @@ const MultipleChoiceTeacherView  = observer(class MultipleChoiceTeacherView exte
         this.handleRadioOptionChange = this.handleRadioOptionChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     };
+
+    isQuestionEmpty() {
+        return this.activity.questionData[this.props.index].question === ""
+    }
+
+    initializeTeacherView() {
+        this.setState({question: "Type your question here"});
+        this.setState({answerOptions: ["Question 1", "Question 2", "Question 3", "Question 4", "Question 5"]});
+        this.setState({isSelectedArray: [true, false, false, false, false]});
+    }
 
     saveData() {
         let question = {
@@ -49,6 +59,7 @@ const MultipleChoiceTeacherView  = observer(class MultipleChoiceTeacherView exte
         let answerOptions = this.state.answerOptions;
         answerOptions[answerOptionIndex] = answerOption;
         this.setState({answerOptions: answerOptions});
+        this.saveData();
     }
 
     handleRadioOptionChange(event) {
@@ -59,7 +70,9 @@ const MultipleChoiceTeacherView  = observer(class MultipleChoiceTeacherView exte
         isSelectedArray = isSelectedArray.map((_, index) => {
             return index != radioOptionIndex ? false : true;
         });
-        this.setState({isSelectedArray: isSelectedArray});
+        this.setState({isSelectedArray: isSelectedArray}, () => {
+            this.saveData();
+        });
     }
 
     handleSubmit(event) {
@@ -69,23 +82,19 @@ const MultipleChoiceTeacherView  = observer(class MultipleChoiceTeacherView exte
 
     populateComponent() {
         this.setState({question: this.activity.questionData[this.props.index].question});
-        this.setState({answerOptions: this.activity.questionData[this.props.index].answerOptions})
-
-        let isSelectedArray = this.state.answerOptions.map((_, index) => {
-            return (this.correctAnswer === index); 
-        });
-
-        this.setState({isSelectedArray: isSelectedArray });
+        this.setState({answerOptions: [...this.activity.questionData[this.props.index].answerOptions]}, () => {
+            let isSelectedArray = this.state.answerOptions.map((answerOption, index) => {
+                return (this.activity.correctAnswerData[this.props.index] === index); 
+            });
+            this.setState({isSelectedArray: isSelectedArray});
+        })
     }
 
-    componentWillUnmount() {
-        this.saveData();
-        console.log("Question or view is about to be changed, teacher view data being saved")
-
-    }
+    
 
     componentDidMount() {
-        if(this.questionData) {
+        this.initializeTeacherView();
+        if(!this.isQuestionEmpty()) {
             this.populateComponent();
         }
     }

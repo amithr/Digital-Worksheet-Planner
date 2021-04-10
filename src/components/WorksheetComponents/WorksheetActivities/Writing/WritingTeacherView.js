@@ -26,11 +26,15 @@ const WritingTeacherView = observer(class WritingTeacherView extends React.Compo
         } else if(fieldType === 'question') {
             this.setState({question: event.target.value});
         }
-
+        this.saveData();
     }
 
     handleSubmit(event) {
         event.preventDefault();
+        this.saveData();
+    }
+
+    saveData() {
         this.activity.questionData = this.state.question;
         this.activity.wordCount = this.state.wordCount;
     }

@@ -21,7 +21,7 @@ const MatchingTeacherView = observer(class MatchingTeacherView extends React.Com
         this.deleteQuestionAnswerPair = this.deleteQuestionAnswerPair.bind(this);
     };
 
-    updateActivity() {
+    saveData() {
         this.activity.questionData = this.state.questions;
         this.activity.correctAnswerData = this.state.answers;
     }
@@ -42,13 +42,12 @@ const MatchingTeacherView = observer(class MatchingTeacherView extends React.Com
             intermediateArray[questionAnswerPairNumber] = fieldValue;
             this.setState({answers: intermediateArray });
         }
-
-        this.updateActivity();
+        this.saveData();
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        this.updateActivity();
+        this.saveData();
     }
 
     addNewQuestionAnswerPair(event) {
