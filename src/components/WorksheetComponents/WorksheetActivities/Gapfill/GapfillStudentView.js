@@ -31,6 +31,7 @@ const GapfillStudentView = observer(class GapfillStudentView extends React.Compo
         this.setState({
             studentAnswers: studentAnswers
         });
+        this.activity.studentAnswerData = this.state.studentAnswers;
     }
 
     handleSubmit = (event) => {
@@ -66,7 +67,7 @@ const GapfillStudentView = observer(class GapfillStudentView extends React.Compo
                     <Form.Control type="input"
                     key={questionNumber} 
                     placeholder={questionNumber}
-                    onChange={this.handleChange} 
+                    onKeyPress={this.handleChange} 
                     size="10" />
                 );
             }
