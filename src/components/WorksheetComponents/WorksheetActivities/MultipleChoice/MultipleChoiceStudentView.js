@@ -21,6 +21,11 @@ const MultipleChoiceStudentView = observer(class MultipleChoiceStudentView exten
         this.handleSubmit = this.handleSubmit.bind(this);
     };
 
+    saveData() {
+        let studentAnswer = this.state.isSelectedArray.indexOf(true);
+        this.activity.studentAnswerData[this.props.index].studentAnswer = studentAnswer;
+    }
+
     handleChange(event) {
         let isSelected = event.target.checked;
         let radioOptionIndex = event.target.getAttribute('data-index');
@@ -36,11 +41,6 @@ const MultipleChoiceStudentView = observer(class MultipleChoiceStudentView exten
     handleSubmit(event) {
         event.preventDefault();
         this.saveData();
-    }
-
-    saveData() {
-        let studentAnswer = this.state.isSelectedArray.indexOf(true);
-        this.activity.studentAnswerData[this.props.index].studentAnswer = studentAnswer;
     }
 
     populateComponent() {

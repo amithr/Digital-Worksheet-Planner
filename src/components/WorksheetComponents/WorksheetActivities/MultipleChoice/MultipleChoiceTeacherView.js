@@ -28,10 +28,6 @@ const MultipleChoiceTeacherView  = observer(class MultipleChoiceTeacherView exte
         this.handleSubmit = this.handleSubmit.bind(this);
     };
 
-    isQuestionEmpty() {
-        return this.activity.questionData[this.props.index].question === ""
-    }
-
     initializeTeacherView() {
         this.setState({question: "Type your question here"});
         this.setState({answerOptions: ["Question 1", "Question 2", "Question 3", "Question 4", "Question 5"]});
@@ -47,6 +43,10 @@ const MultipleChoiceTeacherView  = observer(class MultipleChoiceTeacherView exte
         let correctAnswer =  this.state.isSelectedArray.indexOf(true);
         this.activity.questionData[this.props.index] = question;
         this.activity.correctAnswerData[this.props.index] = correctAnswer;
+    }
+    
+    isQuestionEmpty() {
+        return this.activity.questionData[this.props.index].question === ""
     }
 
     handleQuestionChange(event) {
