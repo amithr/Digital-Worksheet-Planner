@@ -16,13 +16,18 @@ const GapfillTeacherView = observer(class GapfillTeacherView extends React.Compo
         this.handleSubmit = this.handleSubmit.bind(this);
     };
 
+    saveData() {
+        this.activity.questionData = this.state.question;
+    }
+
     handleChange(event) {
         this.setState({question: event.target.value});
+        this.saveData()
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        this.activity.questionData = this.state.question;
+        this.saveData();
     }
 
     populateComponent(questionText) {

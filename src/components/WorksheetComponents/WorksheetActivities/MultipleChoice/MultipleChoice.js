@@ -11,6 +11,7 @@ const MultipleChoice = observer(class MultipleChoice extends React.Component {
         super(props);
 
         this.activity = this.props.activity;
+        this.store = this.props.store;
         this.activity.questionData = [];
         this.activity.correctAnswerData = []
         this.activity.studentAnswerData = [];
@@ -49,7 +50,6 @@ const MultipleChoice = observer(class MultipleChoice extends React.Component {
     }
 
     componentDidMount = () => {
-
         let questionData = this.activity.questionData;
         if(questionData) {
             this.setState({questionNumber: questionData.length})
@@ -60,9 +60,13 @@ const MultipleChoice = observer(class MultipleChoice extends React.Component {
         return(
             <div position={this.activity.position}>
                 <p>Multiple Choice Activity</p>
-                <p>Click the '+' button to add a new question. (10 question limit)</p>
-                <Button onClick={this.addQuestion}>+</Button>
-                <MultipleChoiceQuestionSlider removeQuestion={this.removeQuestion} activity={this.activity} questionNumber={this.state.questionNumber}></MultipleChoiceQuestionSlider>
+                {this.props.store.isTeacherMode &&
+                    <div>
+                        <p>Click the '+' button to add a new question. (10 question limit)</p>
+                        <Button onClick={this.addQuestion}>+</Button>
+                    </div>
+                }       
+                <MultipleChoiceQuestionSlider removeQuestion={this.removeQuestion} store={this.store} activity={this.activity} questionNumber={this.state.questionNumber}></MultipleChoiceQuestionSlider>
             </div>
         );
     }

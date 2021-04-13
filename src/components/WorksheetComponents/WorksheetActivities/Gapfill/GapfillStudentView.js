@@ -71,6 +71,7 @@ const GapfillStudentView = observer(class GapfillStudentView extends React.Compo
                     <Form.Control type="input"
                     key={questionNumber} 
                     placeholder={questionNumber}
+                    onChange={this.handleChange} 
                     onKeyPress={this.handleChange} 
                     size="10" />
                 );

@@ -8,31 +8,12 @@ const IndividualMultipleChoiceQuestion = observer(class IndividualMultipleChoice
     constructor(props) {
         super(props);
 
-        // Default state should be teacher for dev purposes
-        this.state = {
-            display: 'teacher'
-        };
-    
-    };
-
-    changeDisplay = () => {
-        let { display } = this.state;
-        this.setState({ display: display === 'student' ? 'teacher' : 'student' });
+        this.activity = this.props.activity;
+        
     };
 
     renderInner = () => {
-        let { display } = this.state;
-        if (display === 'student') {
-            return <StudentView
-                index={this.props.index}
-                activity={this.props.activity}   />
-        } else if (display === 'teacher') {
-            return <TeacherView
-                index={this.props.index}
-                activity={this.props.activity}
-                removeQuestion={this.props.removeQuestion}   
-                />
-            }
+        return (this.props.store.isTeacherMode ? <TeacherView index={this.props.index} activity={this.activity} /> : <StudentView index={this.props.index} activity={this.activity} />);
     };
 
     render() {
@@ -41,7 +22,6 @@ const IndividualMultipleChoiceQuestion = observer(class IndividualMultipleChoice
                 <br />
                 <h3>Q{this.props.index + 1}.</h3>
                 <Form onSubmit = {this.handleSubmit} position={this.props.position}>
-                    <Button onClick={this.changeDisplay}>Switch View</Button>
                     {this.renderInner()}
                 </Form>
             </div>

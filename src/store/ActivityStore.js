@@ -1,4 +1,4 @@
-import { observable, decorate } from "mobx";
+import { observable, decorate, makeAutoObservable, autorun } from "mobx";
 import DatabaseLayer from '../server-bindings/DatabaseLayer';
 import Activity from '../store/Activity.js';
 
@@ -7,6 +7,7 @@ export default class ActivityStore {
     activities = [];
     databaseLayer = new DatabaseLayer();
     index = 0;
+    isTeacherMode = true;
 
     constructor() {
         //Eventually, loadActivities with the aid of the worksheet ID.
@@ -34,8 +35,13 @@ export default class ActivityStore {
         this.activities.splice(this.activities.indexOf(activity), 1);
     }
 
+    changeAllActivitiesModes = (isTeacherMode) => {
+        this.isTeacherMode = isTeacherMode;
+    }
+
 }
 decorate(ActivityStore, {
     activities: observable,
-    index: observable
+    index: observable,
+    isTeacherMode: observable
 });

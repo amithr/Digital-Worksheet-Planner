@@ -49,7 +49,7 @@ const WritingStudentView = observer(class WritingStudentView extends React.Compo
             <Form.Group >
                 <p>Student View</p>
                 <p>Question: {this.state.question}</p>
-                <Form.Control as="textarea" value={this.state.studentAnswer} rows="3" onKeypress={this.handleChange}/>
+                <Form.Control as="textarea" value={this.state.studentAnswer} rows="3" onChange={this.handleChange} onKeyPress={this.handleChange}/>
                 <Button variant="primary" onClick = {this.handleSubmit}>Submit</Button>
             </Form.Group>
         );

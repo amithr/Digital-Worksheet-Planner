@@ -9,27 +9,10 @@ const Matching = observer(class Matching extends React.Component {
         super(props);
 
         this.activity = this.props.activity;
-
-        // Default state should be teacher for dev purposes
-        this.state = {
-            display: 'teacher'
-        };
-    
-    };
-
-    changeDisplay = () => {
-        let { display } = this.state;
-        this.setState({ display: display === 'student' ? 'teacher' : 'student' });
     };
 
     renderInner = () => {
-        let { display } = this.state;
-        
-        if (display === 'student') {
-          return <StudentView activity={this.activity} />
-        } else if (display === 'teacher') {
-          return <TeacherView activity={this.activity} />
-        }
+        return (this.props.store.isTeacherMode ? <TeacherView activity={this.activity} /> : <StudentView activity={this.activity} />);
     };
 
     render() {

@@ -97,6 +97,7 @@ const QuestionAnswerOptionForm = (props) => {
             <p className="matching-activity-column">{props.question}</p>
             <Form.Control className="matching-activity-column" type="input" 
                     data-question-number={props.questionNumber}
+                    onChange={props.handleChange}
                     onKeyPress={props.handleChange}
                     placeholder={'Question ' + (props.questionNumber + 1)}
                     maxLength="20"/>

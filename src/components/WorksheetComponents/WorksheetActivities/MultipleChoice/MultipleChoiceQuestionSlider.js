@@ -19,6 +19,7 @@ const MultipleChoiceQuestionSlider = observer(class MultipleChoiceQuestionSlider
         };
 
         this.activity = this.props.activity;
+        this.store = this.props.store;
     
         this.changeDisplay = this.changeDisplay.bind(this);
     };
@@ -56,7 +57,9 @@ const MultipleChoiceQuestionSlider = observer(class MultipleChoiceQuestionSlider
             key={i}
             index={i}
             removeQuestion={this.props.removeQuestion}
-            activity={this.activity} />;
+            activity={this.activity} 
+            store = {this.store}
+            />;
             
             questions.push(individualQuestion);
         }

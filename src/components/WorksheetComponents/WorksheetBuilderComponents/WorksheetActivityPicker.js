@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Button, Row } from 'react-bootstrap';
+import EditModeButton from './EditModeButton';
 
 class WorksheetActivityPicker extends React.Component {
     constructor(props) {
@@ -67,6 +68,7 @@ class WorksheetActivityPicker extends React.Component {
                 {this.renderActivityPickerForm()}
                 <br />
                 <Button onClick={this.handleSubmit}>Add</Button>
+                <EditModeButton store={this.store} />
             </Form.Group>
     
         );
