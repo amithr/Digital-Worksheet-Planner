@@ -15,10 +15,10 @@ const WorksheetBuilder = observer(class Worksheet extends React.Component {
         return (
             <div className="worksheet-builder-row">
                 <div className="worksheet-activity-picker-column">
-                    <WorksheetActivityPicker store={this.props.store} />
+                    <WorksheetActivityPicker worksheet={this.props.worksheet} store={this.props.store} />
                 </div>
                 <div className="worksheet-activity-area-column">
-                    <WorksheetActivityArea store={this.props.store} droppableId={"activity-area-droppable-area"}/>
+                    <WorksheetActivityArea worksheet={this.props.worksheet} store={this.props.store} droppableId={"activity-area-droppable-area"}/>
                 </div>
             </div>
         );

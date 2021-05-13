@@ -5,36 +5,48 @@
 */
 
 import { observable, decorate } from "mobx";
-import DatabaseLayer from '../server-bindings/DatabaseLayer';
+import DatabaseLayer from '../server-actions/DatabaseLayer';
 import { v4 as uuidv4 } from 'uuid';
 import User from './User';
 
 export default class UserStore {
     users = []
-    /* Load users based on whether the user is a student or teacher and what worksheet(s) they are working assigned to them.
-    * The association with the worksheet and userType will be made on the backend, I think 
+    /* 
     */
     clientUserId = null;
     databaseLayer = new DatabaseLayer();
     index = 0;
 
-    constructor(clientUserId) {
-        this.loadUsers(clientUserId);
+    constructor() {
     }
 
-    loadUsers(clientUserId) {
-
+    create(emailAddress, userType, googleId) {
+        const user = new User(emailAddress, userType, googleId)
+        this.users.push(user);
+        return user;
     }
 
-    createUser() {
-
+    findUserByid(userId) {
+        return this.users.find(user => this.users.id == userId);
     }
 
-    deleteUser(clientUserId, userId) {
+    remove(user) {
+        this.users.splice(this.users.indexOf(user), 1);
+        return user;
+    }
 
+    //Use RSA to at least protect against spoofing a little but
+    generateStudentPinCode(teacherUser, teacherWorksheetId, studentEmailAddress) {
+        //Create new student
+        const newStudent = this.create(studentEmailAddress, 'student', null);
+        const teacherWorksheetRSAKey = teacherUser.getRSAKeyFromTeacherWorksheetId(teacherWorksheetId);
+        const textToEncrypt = teacherUser.id + teacherWorksheetId + studentEmailAddress;
+        const encryptedText = teacherWorksheetRSAKey.encrypt(textToEncrypt, 'base64');
+        newStudent.RSAKeys.push({'worksheetId':teacherWorksheetId, 'RSAKey': teacherWorksheetRSAKey});
+        return encryptedText;
     }
 };
 
 decorate(UserStore, {
-    
+    users: observable
 });

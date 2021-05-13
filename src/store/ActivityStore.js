@@ -1,6 +1,12 @@
 import { observable, decorate, makeAutoObservable, autorun } from "mobx";
-import DatabaseLayer from '../server-bindings/DatabaseLayer';
+import DatabaseLayer from '../server-actions/DatabaseLayer';
 import Activity from '../store/Activity.js';
+
+// This activity store will hold all activities for all worksheets
+// They will be loaded up from the server based on the user who is accessing the application
+// All activities will have a worksheetId assigned to them
+// The activity store will be dynamically updated over a channel to accommodate teachers adding
+// activities in real time.
 
 export default class ActivityStore {
 
@@ -19,14 +25,15 @@ export default class ActivityStore {
         //load from server
     }
 
-    createActivity = (activityType) => {
+    createActivity = (activityType, worksheet) => {
         let position = this.index++;
-        let activity = new Activity(activityType, position);
+        let activity = new Activity(activityType, position, worksheet.id);
         this.activities.push(activity);
+        worksheet.activities.push(activity);
         console.log(activity);
         return activity;
     }
-    
+
     findActivity = (activityId) => {
         return this.activities.find(activity => activity.id == activityId);
     }

@@ -33,15 +33,19 @@ const WorksheetActivityArea = observer(class WorksheetActivityArea extends React
 
         this.store.activities.map((activity, index) => {
             const ActivityComponent = this.components[activity.activityType];
-            activityArray.push(
-                <div key={index}>
-                    <DeleteActivity store={this.store} activity={activity} />    
-                    <ActivityComponent 
-                        store={this.store}
-                        activity ={activity}
-                         />
-                </div>
-            );
+            console.log('Loop Activity WorksheetId: ' + activity.worksheetId);
+            console.log('WorksheetId: ' + this.props.worksheet.id);
+            if(activity.worksheetId === this.props.worksheet.id) {
+                activityArray.push(
+                    <div key={index}>
+                        <DeleteActivity store={this.store} activity={activity} />    
+                        <ActivityComponent 
+                            store={this.store}
+                            activity ={activity}
+                             />
+                    </div>
+                );
+            }
         });
         
         return activityArray;

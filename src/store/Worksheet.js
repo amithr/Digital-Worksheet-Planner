@@ -9,25 +9,16 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default class Worksheet {
     id = null;
-    //Could be a student or a teacher
-    clientUserId = null;
-    // This is the teacher-made template for the student worksheet
-    teacherWorksheetId = null;
+    userId = 0;
+    authorId = 0;
+    //Name of user
+    name = null;
     worksheetType = null; //(student or teacher)?
     activities = [];
-    
-    constructor(activities, studentId, worksheetId) {
-        this.activities = activities;
-        this.studentId = studentId;
-        this.teacherWorksheetId = worksheetId;
+    editMode = false;
+    timeLimit = 0; //minutes
+    constructor(userId) {
+        this.userId = userId;
         this.id = uuidv4();
     }
-
-    createWorksheet(clientUserId, teacherWorksheetId) {
-    //If teacherWorksheetId is undefined, it's a teacher worksheet and an ID needs to be generated for it.
-    }
 }
-
-decorate(Worksheet, {
-    activities: observable
-})

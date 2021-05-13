@@ -1,5 +1,55 @@
 This is the frontend of the Digital Worksheet Creator. It is written entirely in React.js with Mobx utilized for state management.
 
+To run the application:
+1) Run "npm install" in the terminal.
+2) Run "npm start"
+
+To test, simply run "npm test."
+
+Login Scheme
+
+Teachers can immediately log in via Google and start creating worksheets.
+
+Students must be sent a link to a teacher-created worksheet.
+They must then log in via Google and will be directed to their worksheet.
+
+After the first login, they can independently access their accounts to see active worksheets,
+however, they will still receive emails where necessary as notifications of new worksheets.
+
+Data Store
+The data store is the heart of the application.
+
+The stores (WorksheetStore.js, ActivityStore.js and UserStore.js all hold data stores (Objects that hold multiple other ).
+
+The UserStore is instantiated in "App.js" and the WorksheetStore and ActivityStore are instantiated in "Worksheets.js".
+
+In each store, there is an array that holds these objects. This array is "observable" which means that any changes
+made to this array are automatically reflected across the application.
+
+The stores are also where all server interactions will take place. The rest of the applicated will only communicated
+with the backend through a store, never directly.
+
+Each store also comes with a set of functions:
+ActivityStore
+createActivity
+findActivity
+removeActivity
+attachActivitytoWorksheet - Every activity must be attached to a worksheet. Each worksheet, student or teacher,
+has a set of activities.
+changeAllActivitiesModes (SOON TO BE DEPRECATED) - switch modes between Teacher (editable) and student (non-editable)
+
+WorksheetStore
+create
+add
+
+
+
+Server Access
+
+
+
+
+
 - Notes
 
 - Teacher creates a worksheet which has it's own id.

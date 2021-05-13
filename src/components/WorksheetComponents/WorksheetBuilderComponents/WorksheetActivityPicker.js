@@ -47,7 +47,7 @@ class WorksheetActivityPicker extends React.Component {
         //Set state to false to indicate that they no longer need to be added
         for (const [activity, isActivitySelected] of Object.entries(this.state)) {
             if(isActivitySelected) {
-                this.store.createActivity(activity.toString());
+                this.store.createActivity(activity.toString(), this.props.worksheet);
                 this.setState({activity : false});
             }
         }

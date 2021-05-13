@@ -1,30 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState} from 'react';
+import { useParams } from 'react-router-dom';
 import { observer } from "mobx-react";
-import WorksheetBuilder from './WorksheetBuilderComponents/WorksheetBuilder';
-import Sidebar from '../SidebarComponents/Sidebar';
 import ActivityStore from '../../store/ActivityStore.js'
+import WorksheetStore from '../../store/WorksheetStore.js';
+import TeacherView from './TeacherView.js';
+import StudentView from './StudentView.js';
+import UserStore from '../../store/UserStore.js';
+import executeFixtures from '../../store/Fixtures.js';
 
 
 
 
-const Worksheets = observer(class Worksheet extends React.Component {
-    constructor(props) {
-        super(props)
-        this.activityStore = new ActivityStore();
+const Worksheets = observer(props => {
+    let {userType, userId, studentPinCode} = useParams();
+    const activityStore = new ActivityStore();
+    //Load teacher and any students from database on initialization
+    const userStore = new UserStore();
+    //Load all worksheets from database on initialization
+    const worksheetStore = new WorksheetStore();
+    executeFixtures(userStore, worksheetStore, activityStore);
+    console.log('Hit the Worksheet component');
+    const getView = () => {
+        return userType === 'teacher' ? <TeacherView teacherUserId={userId} worksheetStore={worksheetStore} activityStore={activityStore} /> : <StudentView studentPinCode = {studentPinCode} activityStore={activityStore} />
     }
 
     //Eventually what is rendered will be determined by whether a student or teacher is looking at the worksheet
-    render() {
-        return (
-            <div className="row">
-                <WorksheetBuilder store={this.activityStore}/>
-                {/*Sidebar Column */}
-                <div className="sidebar-column">
-                    <Sidebar />
-                </div>
-            </div>
-        );
-    }
+    return (
+        <div className="row">
+            <TeacherView teacherUserId={userId} worksheetStore={worksheetStore} activityStore={activityStore} />
+        </div>
+    );
 });
 
 export default Worksheets;

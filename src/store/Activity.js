@@ -1,9 +1,13 @@
 import { observable, decorate } from "mobx";
 import { v4 as uuidv4 } from 'uuid';
 
+// Every activity will have a many-to-one relationship to with a worksheet
+
 export default class Activity {
     id = null;
-    author = null;
+    worksheetId = null;
+    //This will be only be filled in if the activity is on a student worksheet
+    teacherWorksheetId = null;
     activityType = null;
     //There could be one answer or many answers
     questionData = "";
@@ -13,7 +17,8 @@ export default class Activity {
     position = 0;
     score = 0;
 
-    constructor(activityType, position){
+    constructor(activityType, position, worksheetId) {
+        this.worksheetId = worksheetId;
         this.activityType = activityType;
         this.position = position;
         this.id = uuidv4();
